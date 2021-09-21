@@ -5,27 +5,28 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
 
     private List<User> users = new ArrayList<>(Arrays.asList(
             new User(
-                    1L,
+                    UUID.randomUUID(),
                     "Andrei",
                     "Pandit",
                     "andrei.pandit@gmail.com",
                     "123",
                     UserRole.USER),
             new User(
-                    2L,
+                    UUID.randomUUID(),
                     "Maria",
                     "Ionescu",
                     "mariat@gmail.com",
                     "1234",
                     UserRole.USER),
             new User(
-                    3L,
+                    UUID.randomUUID(),
                     "Ion",
                     "Marinescu",
                     "i.marinescu@gmail.com",
@@ -34,30 +35,27 @@ public class UserService {
             )
     ));
 
-    public List<User> getUsers () {
+    public List<User> getUsers() {
         return users;
     }
 
-    public User getUser(Long id) {
+    public User getUser(UUID id) {
         return users.stream()
                 .filter(user -> user.getId().equals(id)).findFirst().get();
     }
 
     public void addNewUser(User user) {
+//        User newUser = new User(user.getId(), u   ser.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getUserRole());
         users.add(user);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(UUID id) {
         users.removeIf(user -> user.getId().equals(id));
     }
 
-    public void updateUser(User user, Long id) {
-        int counter = 0;
-        for (User user1 : users) {
-            if (user1.getId().equals(id)) {
-                users.set(counter, user);
-            }
-            counter++;
-        }
+    public void updateUser(User user, UUID id) {
+        users.remove(getUser(id));
+        User newUser = new User(id, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getUserRole());
+        users.add(newUser);
     }
 }

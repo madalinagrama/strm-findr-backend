@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,12 +13,11 @@ import javax.persistence.Enumerated;
 @AllArgsConstructor
 public class User {
 
-    private Long id;
+    private UUID id = UUID.randomUUID();
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
 }
