@@ -1,12 +1,13 @@
 package com.example.demo.appuser;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/auth")
 public class AppUserController {
 
     private final AppUserService userService;
@@ -27,7 +28,7 @@ public class AppUserController {
     }
 
     @PostMapping
-    public void registerNewUser(@RequestBody AppUser user) {
+    public void registerNewUser(@Validated @RequestBody AppUser user) {
         userService.addNewUser(user);
     }
 
@@ -37,13 +38,7 @@ public class AppUserController {
     }
 
     @PutMapping(path = "{id}")
-    public void updateUser(@PathVariable("id") Long id,
-                           @RequestParam(required = false) String firstName,
-                           @RequestParam(required = false) String lastName,
-                           @RequestParam(required = false) String email,
-                           @RequestParam(required = false) String password,
-                           @RequestParam(required = false) AppUserRole appUserRole
-                           ) {
-        userService.updateUser(id, firstName, lastName, email, password, appUserRole);
+    public void updateUser(@PathVariable("id") Long id, @RequestBody AppUser user) {
+        userService.updateUser(id, user);
     }
 }
