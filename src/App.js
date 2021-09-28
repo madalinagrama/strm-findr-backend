@@ -9,6 +9,7 @@ import Index from "./components/Index";
 import Country from "./components/Country";
 import Genre from "./components/Genre";
 import About from "./components/About";
+import AuthPage from "./pages/AuthPage";
 
 const App = () => {
     const [country] = useAtom(state.currentCountryAtom);
@@ -89,8 +90,16 @@ const App = () => {
                         <About />
                     </Route>
 
+                    <Route exact path="/login">
+                        <AuthPage/>
+                    </Route>
+
+                    {/*<Route exact path="/profile">*/}
+                    {/*    <Profile/>*/}
+                    {/*</Route>*/}
+
                     <Route exact path="/">
-                        <Index />
+                        <Index/>
                     </Route>
                 </Switch>
             </div>
