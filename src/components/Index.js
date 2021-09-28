@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 
 import state from "../stateManager";
-import Card from "./auth/Card";
+import Card from "./Card";
 
 const Index = () => {
     const [cards] = useAtom(state.cardsAtom);

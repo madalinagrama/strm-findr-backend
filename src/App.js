@@ -10,6 +10,7 @@ import Country from "./components/Country";
 import Genre from "./components/Genre";
 import About from "./components/About";
 import AuthPage from "./pages/AuthPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
     const [country] = useAtom(state.currentCountryAtom);
@@ -94,9 +95,9 @@ const App = () => {
                         <AuthPage/>
                     </Route>
 
-                    {/*<Route exact path="/profile">*/}
-                    {/*    <Profile/>*/}
-                    {/*</Route>*/}
+                    <Route exact path="/profile">
+                        <ProfilePage/>
+                    </Route>
 
                     <Route exact path="/">
                         <Index/>
