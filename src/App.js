@@ -10,6 +10,10 @@ import Country from "./components/Country";
 import Genre from "./components/Genre";
 import About from "./components/About";
 
+import "./App.css";
+import ImageSlider from "./components/ImageSlider";
+import { sliderData } from "./components/sliderData";
+
 const App = () => {
     const [country] = useAtom(state.currentCountryAtom);
     const [keyword] = useAtom(state.currentKeywordAtom);
@@ -78,13 +82,14 @@ const App = () => {
             <Header />
             <div className="container mt-3">
                 <Switch>
-                    <Route exact path="/country/:country">
+                    <ImageSlider />
+                    <Route path="/country/:country">
                         <Country />
                     </Route>
-                    <Route exact path="/genre/:genre">
+                    <Route path="/genre/:genre">
                         <Genre />
                     </Route>
-                    <Route exact path="/about">
+                    <Route path="/about">
                         <About />
                     </Route>
 
