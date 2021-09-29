@@ -1,5 +1,11 @@
+import UserPage from "./UserPage";
+
 const About = () => {
-    return "About page";
+    return (
+        <>
+            <UserPage />
+        </>
+    );
 };
 
 export default About;

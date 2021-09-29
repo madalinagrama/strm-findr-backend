@@ -21,18 +21,17 @@ const App = () => {
         try {
             let options = {
                 method: "GET",
-                url: `https://streaming-availability.p.rapidapi.com/search/basic`,
+                url: process.env.REACT_APP_URL,
                 headers: {
                     "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
-                    "x-rapidapi-key":
-                        "f7ec7c7f71msh560ad9410ceaeccp101c1fjsn8491093b056f",
+                    "x-rapidapi-key": process.env.REACT_APP_API_KEY,
                 },
                 params: {
                     country: country,
                     service: service,
                     keyword: keyword,
                     genre: genre,
-                    type: "movie",
+                    type: "series",
                 },
             };
 
