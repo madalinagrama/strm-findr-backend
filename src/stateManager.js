@@ -20,7 +20,6 @@ const state = {
     countriesListAtom: atom(countries),
     genresListAtom: atom(genres),
     servicesAtom: atom(services),
-    loggedAtom: atom(false),
     cardsAtom: atom([
         {
             image: null,

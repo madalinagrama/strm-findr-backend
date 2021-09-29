@@ -75,6 +75,12 @@ const Header = () => {
         id: "searchbutton",
     };
 
+    const logoutButtonProps = {
+        className: "btn btn-outline-danger",
+        type: "button",
+        id: "logoutButton"
+    }
+
     return (
         <Fragment>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -109,6 +115,11 @@ const Header = () => {
                                 <NavLink {...navLinkProps} to="/register">
                                     Register
                                 </NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <button { ...logoutButtonProps }>
+                                    Logout
+                                </button>
                             </li>
                         </ul>
                     </div>
