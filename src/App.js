@@ -11,8 +11,6 @@ import Genre from "./components/Genre";
 import About from "./components/About";
 
 import "./App.css";
-import ImageSlider from "./components/ImageSlider";
-import { sliderData } from "./components/sliderData";
 
 const App = () => {
     const [country] = useAtom(state.currentCountryAtom);
@@ -82,7 +80,6 @@ const App = () => {
             <Header />
             <div className="container mt-3">
                 <Switch>
-                    <ImageSlider />
                     <Route path="/country/:country">
                         <Country />
                     </Route>

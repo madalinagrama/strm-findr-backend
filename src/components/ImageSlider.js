@@ -18,10 +18,15 @@ function ImageSlider() {
 
     return (
         <section className="slider">
-            <FaArrowAltCircleLeft className="left-arrow" onClick={prevSlide} />
+            <FaArrowAltCircleLeft
+                className="left-arrow"
+                onClick={prevSlide}
+                style={{ fill: "#dc3545" }}
+            />
             <FaArrowAltCircleRight
                 className="right-arrow"
                 onClick={nextSlide}
+                style={{ fill: "#dc3545" }}
             />
             {sliderData.map((slide, index) => {
                 return (
