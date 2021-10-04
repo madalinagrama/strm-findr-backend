@@ -1,5 +1,7 @@
 package com.example.demo.appuser;
 
+import com.example.demo.auth.models.User;
+import com.example.demo.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,28 +10,28 @@ import java.util.*;
 @Service
 public class AppUserService {
 
-    private final AppUserRepository appUserRepository;
+    private final UserRepository appUserRepository;
 
     @Autowired
-    public AppUserService(AppUserRepository appUserRepository) {
+    public AppUserService(UserRepository appUserRepository) {
         this.appUserRepository = appUserRepository;
     }
 
-    private List<AppUser> users = new ArrayList<>(Arrays.asList(
+    private List<User> users = new ArrayList<>(Arrays.asList(
 
     ));
 
-    public List<AppUser> getUsers() {
+    public List<User> getUsers() {
 
         return appUserRepository.findAll();
     }
 
-    public Optional<AppUser> getUser(Long id) {
+    public Optional<User> getUser(Long id) {
         return appUserRepository.findById(id);
     }
 
-    public void addNewUser(AppUser user) {
-        Optional<AppUser> appUserOptional = appUserRepository.findAppUserByEmail(user.getEmail());
+    public void addNewUser(User user) {
+        Optional<User> appUserOptional = appUserRepository.findAppUserByEmail(user.getEmail());
 
         if (appUserOptional.isPresent()) {
             throw new IllegalStateException("Email taken");
@@ -45,17 +47,16 @@ public class AppUserService {
         appUserRepository.deleteById(id);
     }
 
-    public void updateUser(Long id, AppUser appUser) {
+    public void updateUser(Long id, User appUser) {
         boolean exists = appUserRepository.existsById(id);
         if (!exists) {
             throw new IllegalStateException("User with id " + id + " does not exist!");
         }
-        AppUser user = appUserRepository.getById(id);
+        User user = appUserRepository.getById(id);
         user.setFirstName(appUser.getFirstName());
         user.setLastName(appUser.getLastName());
         user.setEmail(appUser.getEmail());
         user.setPassword(appUser.getPassword());
-        user.setUserRole(appUser.getUserRole());
         appUserRepository.save(user);
 
     }
