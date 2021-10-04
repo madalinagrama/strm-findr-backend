@@ -12,6 +12,8 @@ import About from "./components/About";
 import AuthPage from "./pages/AuthPage";
 import ProfilePage from "./pages/ProfilePage";
 
+import "./App.css";
+
 const App = () => {
     const [country] = useAtom(state.currentCountryAtom);
     const [keyword] = useAtom(state.currentKeywordAtom);
@@ -23,18 +25,17 @@ const App = () => {
         try {
             let options = {
                 method: "GET",
-                url: `https://streaming-availability.p.rapidapi.com/search/basic`,
+                url: process.env.REACT_APP_URL,
                 headers: {
                     "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
-                    "x-rapidapi-key":
-                        "f7ec7c7f71msh560ad9410ceaeccp101c1fjsn8491093b056f",
+                    "x-rapidapi-key": process.env.REACT_APP_API_KEY,
                 },
                 params: {
                     country: country,
                     service: service,
                     keyword: keyword,
                     genre: genre,
-                    type: "movie",
+                    type: "series",
                 },
             };
 
@@ -81,13 +82,13 @@ const App = () => {
             <Header />
             <div className="container mt-3">
                 <Switch>
-                    <Route exact path="/country/:country">
+                    <Route path="/country/:country">
                         <Country />
                     </Route>
-                    <Route exact path="/genre/:genre">
+                    <Route path="/genre/:genre">
                         <Genre />
                     </Route>
-                    <Route exact path="/about">
+                    <Route path="/about">
                         <About />
                     </Route>
 

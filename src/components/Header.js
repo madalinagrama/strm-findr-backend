@@ -8,6 +8,8 @@ import header from "./img/Header.png";
 
 import state from "../stateManager";
 
+import ImageSlider from "./ImageSlider";
+
 const Header = () => {
     const [_country, setCountry] = useAtom(state.currentCountryAtom);
     const [_genre, setGenre] = useAtom(state.currentGenreAtom);
@@ -22,7 +24,7 @@ const Header = () => {
     };
     const handleGenreChange = (e) => {
         e.preventDefault();
-        console.log("genre is" + e.target.dataset.id)
+        console.log("genre is" + e.target.dataset.id);
         setGenre(e.target.dataset.id);
     };
 
@@ -66,7 +68,7 @@ const Header = () => {
         name: "searchBox",
         "aria-label": "Search title",
         "aria-describedby": "searchbutton",
-        defaultValue: keyword
+        defaultValue: keyword,
     };
 
     const searchButtonProps = {
@@ -125,7 +127,6 @@ const Header = () => {
                     </div>
                 </div>
             </nav>
-
             <img src={header} className="img-fluid w-100" alt=""/>
 
             {location.pathname !== "/login" && (
