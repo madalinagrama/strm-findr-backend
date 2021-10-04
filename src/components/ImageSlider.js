@@ -14,8 +14,6 @@ function ImageSlider() {
         SetCurrent(current === 0 ? length - 1 : current - 1);
     };
 
-    console.log(current);
-
     return (
         <section className="slider">
             <FaArrowAltCircleLeft

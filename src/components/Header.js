@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 
 import Dropdown from "./Dropdown";
 import logo from "./img/Logo.png";
-import header from "./img/Header.png";
+// import header from "./img/Header.png";
 
 import state from "../stateManager";
 
@@ -116,7 +116,7 @@ const Header = () => {
                 </div>
             </nav>
 
-            <img src={header} className="img-fluid w-100" alt="" />
+            {/* <img src={header} className="img-fluid w-100" alt="" /> */}
 
             <ImageSlider />
 
