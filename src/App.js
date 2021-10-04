@@ -40,6 +40,7 @@ const App = () => {
             };
 
             const req = await axios.request(options);
+            console.log(req);
             return req;
         } catch (err) {
             console.error(err);
@@ -48,12 +49,9 @@ const App = () => {
 
     useEffect(() => {
         const cardsLoader = async () => {
-            const serviceList = Object.keys(services).filter((s) =>
-                services[s].includes(country)
-            );
             let cards = [];
 
-            for (let serv of serviceList) {
+            for (let serv of services) {
                 let data = await fetchData(serv);
                 if (data) {
                     cards.push(
@@ -75,7 +73,7 @@ const App = () => {
         };
 
         cardsLoader();
-    }, [country, keyword, genre]);
+    }, []);
 
     return (
         <Router>
@@ -93,15 +91,15 @@ const App = () => {
                     </Route>
 
                     <Route exact path="/login">
-                        <AuthPage/>
+                        <AuthPage />
                     </Route>
 
                     <Route exact path="/profile">
-                        <ProfilePage/>
+                        <ProfilePage />
                     </Route>
 
                     <Route exact path="/">
-                        <Index/>
+                        <Index />
                     </Route>
                 </Switch>
             </div>
