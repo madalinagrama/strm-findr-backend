@@ -3,11 +3,9 @@ package com.example.demo.appuser;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 //import org.hibernate.validator.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 
 @Getter
 @Setter
@@ -40,7 +38,9 @@ public class AppUser {
     private String email;
 
     @NotBlank(message = "A password is required")
-    @Size(min = 6, message = "At least 6 chars")
+//    @Min(value = 3, message = "At least 3 chars")
+//    @Max(value = 25, message = "Maximum 25 chars")
+//    @Size(min = 6, message = "At least 6 chars")
     private String password;
 
     @NotNull
