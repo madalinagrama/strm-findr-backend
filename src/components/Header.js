@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
 
 import Dropdown from "./Dropdown";
@@ -16,6 +16,7 @@ const Header = () => {
     const [keyword, setKeyword] = useAtom(state.currentKeywordAtom);
     const [countries] = useAtom(state.countriesListAtom);
     const [genres] = useAtom(state.genresListAtom);
+    const location = useLocation();
 
     const handleCountryChange = (e) => {
         e.preventDefault();
@@ -76,6 +77,12 @@ const Header = () => {
         id: "searchbutton",
     };
 
+    const logoutButtonProps = {
+        className: "btn btn-outline-danger",
+        type: "button",
+        id: "logoutButton",
+    };
+
     return (
         <Fragment>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -111,41 +118,46 @@ const Header = () => {
                                     Register
                                 </NavLink>
                             </li>
+                            <li className="nav-item">
+                                <button {...logoutButtonProps}>Logout</button>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
 
-            {/* <img src={header} className="img-fluid w-100" alt="" /> */}
-
             <ImageSlider />
 
-            <div className="container mt-3">
-                <div className="row">
-                    <div className="col-md-6 col-12">
-                        <form onSubmit={searchHandler}>
-                            <div className="input-group">
-                                <input {...searchInputProps} />
-                                <button {...searchButtonProps}>Search</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div className="col-md-3 col-12">
-                        <Dropdown
-                            title="Countries"
-                            actions={countries}
-                            callback={handleCountryChange}
-                        />
-                    </div>
-                    <div className="col-md-3 col-12">
-                        <Dropdown
-                            title="Genres"
-                            actions={genres}
-                            callback={handleGenreChange}
-                        />
+            {location.pathname !== "/login" && (
+                <div className="container mt-3">
+                    <div className="row">
+                        <div className="col-md-6 col-12">
+                            <form onSubmit={searchHandler}>
+                                <div className="input-group">
+                                    <input {...searchInputProps} />
+                                    <button {...searchButtonProps}>
+                                        Search
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="col-md-3 col-12">
+                            <Dropdown
+                                title="Countries"
+                                actions={countries}
+                                callback={handleCountryChange}
+                            />
+                        </div>
+                        <div className="col-md-3 col-12">
+                            <Dropdown
+                                title="Genres"
+                                actions={genres}
+                                callback={handleGenreChange}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </Fragment>
     );
 };
