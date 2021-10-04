@@ -36,7 +36,7 @@ public class AppUserConfig {
                     "123"
             );
 
-            appUserRepository.saveAll(List.of(appUser1, appUser2, appUser3));
+//            appUserRepository.saveAll(List.of(appUser1, appUser2, appUser3));
 
         };
     }
