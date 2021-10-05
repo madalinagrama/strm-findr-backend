@@ -17,14 +17,12 @@ function ImageSlider() {
     return (
         <section className="slider">
             <FaArrowAltCircleLeft
-                className="left-arrow"
+                className="arrow left-arrow"
                 onClick={prevSlide}
-                style={{ fill: "#dc3545" }}
             />
             <FaArrowAltCircleRight
-                className="right-arrow"
+                className="arrow right-arrow"
                 onClick={nextSlide}
-                style={{ fill: "#dc3545" }}
             />
             {sliderData.map((slide, index) => {
                 return (
