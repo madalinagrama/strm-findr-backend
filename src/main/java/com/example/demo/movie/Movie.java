@@ -24,24 +24,21 @@ public class Movie {
             allocationSize = 1
     )
     private Long id;
-    private String countries;
-//    @ElementCollection
-//    private List<String> genres = new ArrayList<String>();
-    private int genres;
     private String imdbID;
     private String originalTitle;
+    private int genres;
+    private String countries;
     private String overview;
     private String posterURL;
     private String streamingInfo;
 
-    public Movie(String countries, int genres, String imdbID, String originalTitle, String overview, String posterURL, String streamingInfo) {
-        this.countries = countries;
-        this.genres = genres;
+    public Movie(String imdbID, String originalTitle, int genres, String countries, String overview, String posterURL, String streamingInfo) {
         this.imdbID = imdbID;
         this.originalTitle = originalTitle;
+        this.genres = genres;
+        this.countries = countries;
         this.overview = overview;
         this.posterURL = posterURL;
         this.streamingInfo = streamingInfo;
     }
-
 }
