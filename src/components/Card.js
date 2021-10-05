@@ -1,3 +1,4 @@
+import React from "react";
 import ImageNotFound from "./img/ImageNotFound.png";
 
 const Card = ({ image, title, overview, id, service }) => {
@@ -9,7 +10,9 @@ const Card = ({ image, title, overview, id, service }) => {
                 <img src={picture} className="card-img-top" alt={title} />
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
-                    <h6 className="card-subtitle mb-2 text-danger">Available on {service.toUpperCase()}</h6>
+                    <h6 className="card-subtitle mb-2 text-danger">
+                        Available on {service.toUpperCase()}
+                    </h6>
                     <p className="card-text">{overview}</p>
                     <a
                         href={`https://www.imdb.com/title/${id}`}

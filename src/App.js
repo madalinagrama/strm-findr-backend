@@ -1,5 +1,5 @@
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useEffect } from "react";
 import { useAtom } from "jotai";
 import axios from "axios";
 import state from "./stateManager";

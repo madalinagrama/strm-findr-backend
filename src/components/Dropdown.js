@@ -1,4 +1,6 @@
-const Dropdown = ({ title="Dropdown", actions=[], callback=null }) => {
+import React from "react";
+
+const Dropdown = ({ title = "Dropdown", actions = [], callback = null }) => {
     const buttonId = title.toLowerCase().replace(/[^a-z0-9]+/gi, "-");
 
     const buttonProps = {
