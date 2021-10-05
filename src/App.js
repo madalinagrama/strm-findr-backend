@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAtom } from "jotai";
 import axios from "axios";
@@ -11,6 +11,7 @@ import Genre from "./components/Genre";
 import About from "./components/About";
 import AuthPage from "./pages/AuthPage";
 import ProfilePage from "./pages/ProfilePage";
+import Spinner from "./components/Spinner";
 
 import "./App.css";
 
@@ -20,6 +21,8 @@ const App = () => {
     const [genre] = useAtom(state.currentGenreAtom);
     const [services] = useAtom(state.servicesAtom);
     const [_cards, setCards] = useAtom(state.cardsAtom);
+
+    const [loading, setLoading] = useState(true);
 
     const fetchData = async (service = "netflix") => {
         try {
@@ -69,6 +72,7 @@ const App = () => {
 
             if (cards.length) {
                 setCards(cards);
+                setLoading(false);
             }
         };
 
@@ -78,31 +82,34 @@ const App = () => {
     return (
         <Router>
             <Header />
-            <div className="container mt-3">
-                <Switch>
-                    <Route path="/country/:country">
-                        <Country />
-                    </Route>
-                    <Route path="/genre/:genre">
-                        <Genre />
-                    </Route>
-                    <Route path="/about">
-                        <About />
-                    </Route>
+            {loading && <Spinner />}
+            {!loading && (
+                <div className="container mt-3">
+                    <Switch>
+                        <Route path="/country/:country">
+                            <Country />
+                        </Route>
+                        <Route path="/genre/:genre">
+                            <Genre />
+                        </Route>
+                        <Route path="/about">
+                            <About />
+                        </Route>
 
-                    <Route exact path="/login">
-                        <AuthPage />
-                    </Route>
+                        <Route exact path="/login">
+                            <AuthPage />
+                        </Route>
 
-                    <Route exact path="/profile">
-                        <ProfilePage />
-                    </Route>
+                        <Route exact path="/profile">
+                            <ProfilePage />
+                        </Route>
 
-                    <Route exact path="/">
-                        <Index />
-                    </Route>
-                </Switch>
-            </div>
+                        <Route exact path="/">
+                            <Index />
+                        </Route>
+                    </Switch>
+                </div>
+            )}
         </Router>
     );
 };

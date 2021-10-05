@@ -13,8 +13,11 @@
     border-radius: 10px;
 }
 
-.arrow {
+svg {
     fill: #dc3545;
+}
+
+.arrow {
     position: absolute;
     top: 50%;
     font-size: 3rem;
@@ -41,4 +44,19 @@
     opacity: 1;
     transition-duration: 1s;
     transform: scale(1.08);
+}
+
+.spinner {
+    animation: spin 3s infinite linear;
+    width: 3em;
+    height: 3em;
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
 }
