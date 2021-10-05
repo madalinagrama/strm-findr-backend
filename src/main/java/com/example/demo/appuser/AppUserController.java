@@ -1,14 +1,16 @@
 package com.example.demo.appuser;
 
-import com.example.demo.auth.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-@RequestMapping(path = "/auth")
+@RequestMapping(path = "/users")
+@CrossOrigin(origins = "*")
+@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
 public class AppUserController {
 
     private final AppUserService userService;
@@ -19,18 +21,18 @@ public class AppUserController {
     }
 
     @GetMapping
-    public List<User> getUsers () {
+    public List<AppUser> getUsers () {
         return userService.getUsers();
     }
 
-    @GetMapping(path = "{id}")
-    public Optional<User> getUser(@PathVariable("id") Long id) {
-        return userService.getUser(id);
+    @GetMapping(path = "/profile/{id}")
+    public AppUser getUserById(@PathVariable("id") Long id) {
+        return userService.findById(id);
     }
 
     @PostMapping
-    public void registerNewUser(@Validated @RequestBody User user) {
-        userService.addNewUser(user);
+    public void registerNewUser(@Validated @RequestBody AppUser user) {
+        userService.registerNewUser(user);
     }
 
     @DeleteMapping(path = "{id}")
@@ -38,8 +40,8 @@ public class AppUserController {
         userService.deleteUser(id);
     }
 
-    @PutMapping(path = "{id}")
-    public void updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+    @PutMapping(path = "{id}/edit")
+    public void updateUser(@PathVariable("id") Long id, @RequestBody AppUser user) {
         userService.updateUser(id, user);
     }
 }

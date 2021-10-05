@@ -1,7 +1,5 @@
 package com.example.demo.appuser;
 
-import com.example.demo.auth.models.User;
-import com.example.demo.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,30 +8,34 @@ import java.util.*;
 @Service
 public class AppUserService {
 
-    private final UserRepository appUserRepository;
+    private final AppUserRepository appUserRepository;
 
     @Autowired
-    public AppUserService(UserRepository appUserRepository) {
+    public AppUserService(AppUserRepository appUserRepository) {
         this.appUserRepository = appUserRepository;
     }
 
-    private List<User> users = new ArrayList<>(Arrays.asList(
+    private List<AppUser> users = new ArrayList<>(Arrays.asList(
 
     ));
 
-    public List<User> getUsers() {
-
+    public List<AppUser> getUsers() {
         return appUserRepository.findAll();
     }
 
-    public Optional<User> getUser(Long id) {
+    public AppUser findById(Long id) {
+        return appUserRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Could not find user with username: " + id));
+    }
+
+    public Optional<AppUser> getUser(Long id) {
         return appUserRepository.findById(id);
     }
 
-    public void addNewUser(User user) {
-        Optional<User> appUserOptional = appUserRepository.findAppUserByEmail(user.getEmail());
+    public void registerNewUser(AppUser user) {
+        Optional<AppUser> appUserOptionalByEmail = appUserRepository.findAppUserByEmail(user.getEmail());
 
-        if (appUserOptional.isPresent()) {
+        if (appUserOptionalByEmail.isPresent()) {
             throw new IllegalStateException("Email taken");
         }
         appUserRepository.save(user);
@@ -47,17 +49,17 @@ public class AppUserService {
         appUserRepository.deleteById(id);
     }
 
-    public void updateUser(Long id, User appUser) {
+    public void updateUser(Long id, AppUser appUser) {
         boolean exists = appUserRepository.existsById(id);
         if (!exists) {
             throw new IllegalStateException("User with id " + id + " does not exist!");
         }
-        User user = appUserRepository.getById(id);
+        AppUser user = appUserRepository.getById(id);
         user.setFirstName(appUser.getFirstName());
         user.setLastName(appUser.getLastName());
+        user.setUsername(appUser.getUsername());
         user.setEmail(appUser.getEmail());
         user.setPassword(appUser.getPassword());
         appUserRepository.save(user);
-
     }
 }

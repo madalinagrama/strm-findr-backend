@@ -1,8 +1,5 @@
 package com.example.demo.appuser;
 
-import com.example.demo.auth.models.User;
-import com.example.demo.auth.models.ERole;
-import com.example.demo.auth.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,22 +10,22 @@ import java.util.List;
 public class AppUserConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository appUserRepository) {
+    CommandLineRunner commandLineRunner(AppUserRepository appUserRepository) {
         return args -> {
-            User appUser1 = new User(
+            AppUser appUser1 = new AppUser(
                     "Andrei",
                     "Pandit",
                     "andreipandit",
                     "andrei.pandit@gmail.com",
                     "123"
                     );
-            User appUser2 = new User(
+            AppUser appUser2 = new AppUser(
                     "Maria",
                     "Ionescu",
                     "mariaionescu",
                     "mariat@gmail.com",
                     "1234");
-            User appUser3 = new User(
+            AppUser appUser3 = new AppUser(
                     "Ion",
                     "Marinescu",
                     "marinescu",
