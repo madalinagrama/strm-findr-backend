@@ -1,9 +1,9 @@
 import React from "react";
-import { FaSpinner } from "react-icons/fa";
+import { ImSpinner2 } from "react-icons/im";
 
 const Spinner = () => (
     <div className="container mt-3 p-5 text-center">
-        <FaSpinner className="spinner" />
+        <ImSpinner2 className="spinner" />
     </div>
 );
 
