@@ -22,7 +22,7 @@ const App = () => {
     const [services] = useAtom(state.servicesAtom);
     const [_cards, setCards] = useAtom(state.cardsAtom);
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useAtom(state.loadingAtom);
 
     const fetchData = async (service = "netflix") => {
         try {
@@ -77,7 +77,7 @@ const App = () => {
         };
 
         cardsLoader();
-    }, []);
+    }, [keyword]);
 
     return (
         <Router>

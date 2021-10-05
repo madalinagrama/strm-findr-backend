@@ -13,6 +13,7 @@ const Header = () => {
     const [_country, setCountry] = useAtom(state.currentCountryAtom);
     const [_genre, setGenre] = useAtom(state.currentGenreAtom);
     const [keyword, setKeyword] = useAtom(state.currentKeywordAtom);
+    const [_loading, setLoading] = useAtom(state.loadingAtom);
     const [countries] = useAtom(state.countriesListAtom);
     const [genres] = useAtom(state.genresListAtom);
     const location = useLocation();
@@ -27,9 +28,10 @@ const Header = () => {
         setGenre(e.target.dataset.id);
     };
 
-    const searchHandler = async (e) => {
+    const searchHandler = (e) => {
         e.preventDefault();
         setKeyword(e.target.searchBox.value);
+        setLoading(true);
     };
 
     const logoProps = {
