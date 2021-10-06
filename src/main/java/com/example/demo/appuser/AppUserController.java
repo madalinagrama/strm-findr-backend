@@ -17,26 +17,31 @@ public class AppUserController {
         this.userService = userService;
     }
 
+    @CrossOrigin
     @GetMapping
     public List<AppUser> getUsers () {
         return userService.getUsers();
     }
 
+    @CrossOrigin
     @GetMapping(path = "{id}")
     public Optional<AppUser> getUser(@PathVariable("id") Long id) {
         return userService.getUser(id);
     }
 
+    @CrossOrigin
     @PostMapping
     public void registerNewUser(@Validated @RequestBody AppUser user) {
         userService.addNewUser(user);
     }
 
+    @CrossOrigin
     @DeleteMapping(path = "{id}")
     public void deleteUser (@PathVariable("id") Long id) {
         userService.deleteUser(id);
     }
 
+    @CrossOrigin
     @PutMapping(path = "{id}")
     public void updateUser(@PathVariable("id") Long id, @RequestBody AppUser user) {
         userService.updateUser(id, user);
