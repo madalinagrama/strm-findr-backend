@@ -30,7 +30,7 @@ const Header = () => {
 
     const searchHandler = (e) => {
         e.preventDefault();
-        setKeyword(e.target.searchBox.value);
+        setKeyword(e.target.searchbox.value);
         setLoading(true);
     };
 
@@ -66,7 +66,7 @@ const Header = () => {
         type: "text",
         className: "form-control",
         placeholder: "Search title",
-        name: "searchBox",
+        name: "searchbox",
         "aria-label": "Search title",
         "aria-describedby": "searchbutton",
         defaultValue: keyword,
@@ -129,36 +129,38 @@ const Header = () => {
 
             <ImageSlider />
 
-            {location.pathname !== "/login" && (
-                <div className="container mt-3">
-                    <div className="row">
-                        <div className="col-md-6 col-12">
-                            <form onSubmit={searchHandler}>
-                                <div className="input-group">
-                                    <input {...searchInputProps} />
-                                    <button {...searchButtonProps}>
-                                        Search
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div className="col-md-3 col-12">
-                            <Dropdown
-                                title="Countries"
-                                actions={countries}
-                                callback={handleCountryChange}
-                            />
-                        </div>
-                        <div className="col-md-3 col-12">
-                            <Dropdown
-                                title="Genres"
-                                actions={genres}
-                                callback={handleGenreChange}
-                            />
+            {location.pathname !== "/login" &&
+                location.pathname !== "/register" &&
+                location.pathname !== "/about" && (
+                    <div className="container mt-3">
+                        <div className="row">
+                            <div className="col-md-6 col-12">
+                                <form onSubmit={searchHandler}>
+                                    <div className="input-group">
+                                        <input {...searchInputProps} />
+                                        <button {...searchButtonProps}>
+                                            Search
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="col-md-3 col-12">
+                                <Dropdown
+                                    title="Countries"
+                                    actions={countries}
+                                    callback={handleCountryChange}
+                                />
+                            </div>
+                            <div className="col-md-3 col-12">
+                                <Dropdown
+                                    title="Genres"
+                                    actions={genres}
+                                    callback={handleGenreChange}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
         </Fragment>
     );
 };

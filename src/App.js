@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAtom } from "jotai";
 import axios from "axios";
@@ -16,15 +16,9 @@ import Spinner from "./components/Spinner";
 import "./App.css";
 
 const App = () => {
-    const [country] = useAtom(state.currentCountryAtom);
     const [keyword] = useAtom(state.currentKeywordAtom);
-    const [genre] = useAtom(state.currentGenreAtom);
-    const [services] = useAtom(state.servicesAtom);
     const [_cards, setCards] = useAtom(state.cardsAtom);
-
     const [loading, setLoading] = useAtom(state.loadingAtom);
-
-    const [movies, setMovies] = useState([]);
 
     useEffect(() => {
         const cardsLoader = async () => {
@@ -44,6 +38,11 @@ const App = () => {
                     });
 
                     if (cards.length) {
+                        if (keyword) {
+                            cards = cards.filter((c) =>
+                                c.title.toLowerCase().includes(keyword)
+                            );
+                        }
                         setCards(cards);
                         setLoading(false);
                     }
@@ -54,7 +53,7 @@ const App = () => {
         };
 
         cardsLoader();
-    }, []);
+    }, [keyword]);
 
     return (
         <Router>

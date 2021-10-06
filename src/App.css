@@ -46,6 +46,11 @@ svg {
     transform: scale(1.08);
 }
 
+.git {
+    width: 3em;
+    height: 3em;
+}
+
 .spinner {
     animation: spin 3s infinite linear;
     width: 3em;
@@ -54,9 +59,9 @@ svg {
 
 @keyframes spin {
     from {
-        transform:rotate(0deg);
+        transform: rotate(0deg);
     }
     to {
-        transform:rotate(360deg);
+        transform: rotate(360deg);
     }
 }

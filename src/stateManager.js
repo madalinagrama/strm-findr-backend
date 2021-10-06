@@ -32,17 +32,17 @@ const genres = [
 ];
 
 const countries = [
-    "at",
-    "au",
-    "be",
-    "ca",
-    "de",
-    "es",
-    "fr",
-    "gb",
-    "jp",
-    "ro",
-    "us",
+    { name: "AT", id: "at" },
+    { name: "AU", id: "au" },
+    { name: "BE", id: "be" },
+    { name: "CA", id: "ca" },
+    { name: "DE", id: "de" },
+    { name: "ES", id: "es" },
+    { name: "FR", id: "fr" },
+    { name: "GB", id: "gb" },
+    { name: "JP", id: "jp" },
+    { name: "RO", id: "ro" },
+    { name: "US", id: "us" },
 ];
 
 const services = ["apple", "hbo", "hulu", "netflix", "prime"];
