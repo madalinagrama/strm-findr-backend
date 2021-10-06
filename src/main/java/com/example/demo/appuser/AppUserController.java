@@ -53,12 +53,12 @@ public class AppUserController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "users")
+    @GetMapping(path = "/users")
     public List<AppUser> getUsers () {
         return userService.getUsers();
     }
 
-    @GetMapping(path = "profile/{username}")
+    @GetMapping(path = "/profile/{username}")
     public ResponseEntity<AppUser> getUserProfileByUsername(@PathVariable(value = "username") String username) {
         return new ResponseEntity<>(userService.findByUserName(username), HttpStatus.OK);
     }
@@ -68,7 +68,7 @@ public class AppUserController {
 //        userService.registerNewUser(user);
 //    }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/{id}")
     @Transactional
     public ResponseEntity<?> deleteUser (@PathVariable("id") Long id) {
         userService.deleteUser(id);
@@ -151,7 +151,7 @@ public class AppUserController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
-    @PostMapping("logout")
+    @PostMapping("/logout")
     public ResponseEntity<?> logoutUser() {
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok(new MessageResponse("Log out successful!"));
