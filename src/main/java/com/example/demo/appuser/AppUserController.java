@@ -85,6 +85,7 @@ public class AppUserController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -92,7 +93,9 @@ public class AppUserController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         log.info(String.valueOf(roles));
+
         String jwt = jwtUtils.generateJwtToken(loginRequest.getUsername(), roles);
+
         return ResponseEntity.ok(
                 new JwtResponse(
                         jwt,
