@@ -24,60 +24,37 @@ const App = () => {
 
     const [loading, setLoading] = useAtom(state.loadingAtom);
 
-    const fetchData = async (service = "netflix") => {
-        try {
-            let options = {
-                method: "GET",
-                url: process.env.REACT_APP_URL,
-                headers: {
-                    "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
-                    "x-rapidapi-key": process.env.REACT_APP_API_KEY,
-                },
-                params: {
-                    country: country,
-                    service: service,
-                    keyword: keyword,
-                    genre: genre,
-                    type: "series",
-                },
-            };
-
-            const req = await axios.request(options);
-            console.log(req);
-            return req;
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    const [movies, setMovies] = useState([]);
 
     useEffect(() => {
         const cardsLoader = async () => {
             let cards = [];
 
-            for (let serv of services) {
-                let data = await fetchData(serv);
-                if (data) {
-                    cards.push(
-                        data.data.results.map((r) => ({
-                            image: r.posterURLs["original"],
+            axios
+                .get(process.env.REACT_APP_URL)
+                .then((data) => {
+                    data.data.forEach((r) => {
+                        cards.push({
+                            image: r.posterURL,
                             title: r.originalTitle,
                             overview: r.overview.slice(0, 150) + "...",
                             id: r.imdbID,
-                            service: serv,
-                        }))
-                    );
-                    cards = cards.reduce((a, v) => a.concat(v), []);
-                }
-            }
+                            service: r.streamingInfo,
+                        });
+                    });
 
-            if (cards.length) {
-                setCards(cards);
-                setLoading(false);
-            }
+                    if (cards.length) {
+                        setCards(cards);
+                        setLoading(false);
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
         };
 
         cardsLoader();
-    }, [keyword]);
+    }, []);
 
     return (
         <Router>
