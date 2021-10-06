@@ -52,8 +52,6 @@ public class AppUserService {
 
     public AppUser updateUser(Long id, String username, AppUser appUser) {
         AppUser user = validateNewUserNameAndEmail(id, username, appUser.getUsername(), appUser.getEmail());
-        user.setFirstName(appUser.getFirstName());
-        user.setLastName(appUser.getLastName());
         user.setUsername(appUser.getUsername());
         user.setEmail(appUser.getEmail());
         user.setPassword(appUser.getPassword());

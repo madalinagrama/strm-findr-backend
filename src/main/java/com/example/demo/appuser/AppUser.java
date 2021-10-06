@@ -28,24 +28,14 @@ public class AppUser {
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "user_sequence"
     )
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "user_sequence",
+            sequenceName = "user_sequence",
             allocationSize = 1
     )
     private Long id;
-
-    @NotBlank(message = "First Name is mandatory")
-//    @Min(3)
-//    @Max(25)
-    private String firstName;
-
-    @NotBlank(message = "Last Name is mandatory")
-//    @Min(3)
-//    @Max(25)
-    private String lastName;
 
     @NotBlank(message = "Username is mandatory")
 //    @Min(3)
@@ -64,18 +54,18 @@ public class AppUser {
     @JsonIgnore
     private String password;
 
-    private LocalDate joinedDate = LocalDate.now();
-    private Boolean agreed;
+    private LocalDate joinedDate;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable( name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable( name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public AppUser(String firstName, String lastName, String username, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public AppUser( String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+        joinedDate = LocalDate.now();
     }
 }

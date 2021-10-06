@@ -4,25 +4,34 @@ import com.example.demo.security.services.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    private final String jwtSecret = "strmFindrSecretKey";
-    private final int jwtExpirationMs = 8640000;
+    @Value("${strm-finder.app.jwtSecret}")
+    private String jwtSecret;
+    @Value("${strmFinder.app.jwtExpirationMs}")
+    private int jwtExpirationMs;
 
-    public String generateJwtToken(Authentication authentication) {
+    public String generateJwtToken(String username, List<String> roles) {
+        return generateJwtTokenFromUsername(username, roles);
+    }
 
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-
+    private String generateJwtTokenFromUsername(String username, List<String> roles) {
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put("roles", roles);
         return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
+                .setClaims(claims)
+                .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
@@ -31,6 +40,11 @@ public class JwtUtils {
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public Claims getParsedToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret)
+                .parseClaimsJws(token).getBody();
     }
 
     public boolean validateJwtToken(String authToken) {

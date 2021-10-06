@@ -14,14 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -77,13 +75,13 @@ public class AppUserController {
         return ResponseEntity.ok(new MessageResponse("Deleted successfully!"));
     }
 
-    @PutMapping(path = "profile/{id}/edit/{currentUsername}")
+    @PutMapping(path = "/profile/{id}/edit/{currentUsername}")
     public ResponseEntity<AppUser> editUserProfile(@PathVariable(value = "id") Long id, @PathVariable(value = "currentUsername") String currentUsername, @RequestBody AppUser user) {
         AppUser forResponse = userService.updateUser(id, currentUsername, user);
         return new ResponseEntity<>(forResponse, HttpStatus.OK);
     }
 
-    @PostMapping(path = "login")
+    @PostMapping(path = "/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -94,7 +92,7 @@ public class AppUserController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         log.info(String.valueOf(roles));
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        String jwt = jwtUtils.generateJwtToken(loginRequest.getUsername(), roles);
         return ResponseEntity.ok(
                 new JwtResponse(
                         jwt,
@@ -105,7 +103,7 @@ public class AppUserController {
                 ));
     }
 
-    @PostMapping(path = "register")
+    @PostMapping(path = "/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
         if (appUserRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity
@@ -118,8 +116,8 @@ public class AppUserController {
                     .body(new MessageResponse("Error, email is already taken"));
         }
 
-        AppUser user = new AppUser(signupRequest.getFirstName(), signupRequest.getLastName(), signupRequest.getUsername(), signupRequest.getEmail(), passwordEncoder.encode(signupRequest.getPassword()));
-        Set<String> strRoles = signupRequest.getRoles();
+        AppUser user = new AppUser(signupRequest.getUsername(), signupRequest.getEmail(), passwordEncoder.encode(signupRequest.getPassword()));
+        Set<String> strRoles = signupRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {

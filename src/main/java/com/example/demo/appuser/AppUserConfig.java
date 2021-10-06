@@ -13,21 +13,15 @@ public class AppUserConfig {
     CommandLineRunner commandLineRunner(AppUserRepository appUserRepository) {
         return args -> {
             AppUser appUser1 = new AppUser(
-                    "Andrei",
-                    "Pandit",
                     "andreipandit",
                     "andrei.pandit@gmail.com",
                     "123"
                     );
             AppUser appUser2 = new AppUser(
-                    "Maria",
-                    "Ionescu",
                     "mariaionescu",
                     "mariat@gmail.com",
                     "1234");
             AppUser appUser3 = new AppUser(
-                    "Ion",
-                    "Marinescu",
                     "marinescu",
                     "i.marinescu@gmail.com",
                     "123"
