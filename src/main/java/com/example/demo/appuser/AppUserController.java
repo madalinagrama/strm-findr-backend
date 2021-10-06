@@ -1,44 +1,159 @@
 package com.example.demo.appuser;
 
+import com.example.demo.auth.models.ERole;
+import com.example.demo.auth.models.Role;
+import com.example.demo.auth.payload.request.LoginRequest;
+import com.example.demo.auth.payload.request.SignupRequest;
+import com.example.demo.auth.payload.response.JwtResponse;
+import com.example.demo.auth.payload.response.MessageResponse;
+import com.example.demo.auth.repository.RoleRepository;
+import com.example.demo.security.jwt.JwtUtils;
+import com.example.demo.security.services.UserDetailsImpl;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/auth")
+@RequestMapping(path = "api/auth")
+@AllArgsConstructor
+@CrossOrigin
+@Slf4j
 public class AppUserController {
 
+    @Autowired
     private final AppUserService userService;
+    @Autowired
+    AppUserRepository appUserRepository;
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
+    JwtUtils jwtUtils;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     public AppUserController(AppUserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping(path = "/users")
     public List<AppUser> getUsers () {
         return userService.getUsers();
     }
 
-    @GetMapping(path = "{id}")
-    public Optional<AppUser> getUser(@PathVariable("id") Long id) {
-        return userService.getUser(id);
+    @GetMapping(path = "/profile/{username}")
+    public ResponseEntity<AppUser> getUserProfileByUsername(@PathVariable(value = "username") String username) {
+        return new ResponseEntity<>(userService.findByUserName(username), HttpStatus.OK);
     }
 
-    @PostMapping
-    public void registerNewUser(@Validated @RequestBody AppUser user) {
-        userService.addNewUser(user);
-    }
+//    @PostMapping(path = "/users")
+//    public void registerNewUser(@Validated @RequestBody AppUser user) {
+//        userService.registerNewUser(user);
+//    }
 
-    @DeleteMapping(path = "{id}")
-    public void deleteUser (@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/{id}/delete")
+    @Transactional
+    public ResponseEntity<?> deleteUser (@PathVariable("id") Long id) {
         userService.deleteUser(id);
+        return ResponseEntity.ok(new MessageResponse("Deleted successfully!"));
     }
 
-    @PutMapping(path = "{id}")
-    public void updateUser(@PathVariable("id") Long id, @RequestBody AppUser user) {
-        userService.updateUser(id, user);
+    @PutMapping(path = "/profile/{id}/edit/{currentUsername}")
+    public ResponseEntity<AppUser> editUserProfile(@PathVariable(value = "id") Long id, @PathVariable(value = "currentUsername") String currentUsername, @RequestBody AppUser user) {
+        AppUser forResponse = userService.updateUser(id, currentUsername, user);
+        return new ResponseEntity<>(forResponse, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/login")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+
+        List<String> roles = userDetailsImpl.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        log.info(String.valueOf(roles));
+
+        String jwt = jwtUtils.generateJwtToken(loginRequest.getUsername(), roles);
+
+        return ResponseEntity.ok(
+                new JwtResponse(
+                        jwt,
+                        userDetailsImpl.getId(),
+                        userDetailsImpl.getUsername(),
+                        userDetailsImpl.getEmail(),
+                        roles
+                ));
+    }
+
+    @PostMapping(path = "/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
+        if (appUserRepository.existsByUsername(signupRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error, username is already taken"));
+        }
+        if (appUserRepository.existsByEmail(signupRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error, email is already taken"));
+        }
+
+        AppUser user = new AppUser(signupRequest.getUsername(), signupRequest.getEmail(), passwordEncoder.encode(signupRequest.getPassword()));
+        Set<String> strRoles = signupRequest.getRole();
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+                    case "mod":
+                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(modRole);
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+        user.setRoles(roles);
+        user.setJoinedDate(LocalDate.now());
+        appUserRepository.save(user);
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutUser() {
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok(new MessageResponse("Log out successful!"));
     }
 }

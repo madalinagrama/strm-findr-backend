@@ -9,7 +9,15 @@ import java.util.Optional;
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 
-    @Query("SELECT u FROM AppUser u WHERE u.email = ?1")
     Optional<AppUser> findAppUserByEmail(String email);
+    Optional<AppUser> findByUsername(String username);
+    AppUser findUserByUsername(String username);
+    AppUser findUserByEmail(String email);
+    AppUser findUserById(Long id);
 
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
+
+    boolean existsById(Long id);
 }
