@@ -1,6 +1,5 @@
 import axios from "axios";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const UserPage = () => {
     const [users, setUsers] = useState([]);
