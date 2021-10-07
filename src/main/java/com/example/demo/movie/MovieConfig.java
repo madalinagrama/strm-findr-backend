@@ -414,7 +414,7 @@ public class MovieConfig {
                     "Mayhem and mishaps follow young witch Mildred Hubble wherever she goes. She just can't help it! But with her friends' help, Mildred always manages to avoid dis",
                     "https://image.tmdb.org/t/p/original/fLhJKgPKeBsQaSe0i7VOnRQl37r.jpg",
                     "netflix");
-
+//TODO select All (exist a movie) si daca nu exista in db sa introduca altfel sa ignore
             movieRepository.saveAll(List.of(movie1, movie2, movie3, movie4, movie5, movie6, movie7, movie8, movie9, movie10, movie11, movie12, movie13, movie14, movie15, movie16, movie17, movie18, movie19,movie20,movie21,movie22,movie23,movie24,movie25,movie26,movie27,movie28,movie29,movie30,movie31,movie32,movie33,movie34,movie35,movie36,movie37,movie38,movie39,movie40,movie41,movie42,movie43,movie44,movie45,movie46,movie47,movie48,movie49,movie50,movie51,movie52,movie53,movie54,movie55,movie56,movie57));
         };
     }

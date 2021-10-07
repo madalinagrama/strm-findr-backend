@@ -82,7 +82,12 @@ public class AppUserController {
     }
 
     @PutMapping(path = "/profile/{id}/edit/{currentUsername}")
-    public ResponseEntity<AppUser> editUserProfile(@PathVariable(value = "id") Long id, @PathVariable(value = "currentUsername") String currentUsername, @RequestBody AppUser user) {
+    public ResponseEntity<AppUser> editUserProfile(@PathVariable(value = "id") Long id,
+                                                   @PathVariable(value = "currentUsername") String currentUsername,
+                                                   @RequestBody AppUser user) {
+        user.getRoles().stream().forEach(role -> {System.out.println(role.getName());
+            System.out.println(role.getId());} );
+
         AppUser forResponse = userService.updateUser(id, currentUsername, user);
         return new ResponseEntity<>(forResponse, HttpStatus.OK);
     }
@@ -126,8 +131,10 @@ public class AppUserController {
         }
 
         AppUser user = new AppUser(signupRequest.getUsername(), signupRequest.getEmail(), passwordEncoder.encode(signupRequest.getPassword()));
-        Set<String> strRoles = signupRequest.getRole();
+
+        Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
+        System.out.println("strRoles: " + strRoles);
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -136,21 +143,25 @@ public class AppUserController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
+                    case "admin" -> {
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
-                    case "mod":
+                    }
+                    case "mod" -> {
                         Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
-                    default:
+                    }
+                    default -> {
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
+                    }
                 }
             });
         }
+        System.out.println("roles" + roles);
         user.setRoles(roles);
         user.setJoinedDate(LocalDate.now());
         appUserRepository.save(user);
