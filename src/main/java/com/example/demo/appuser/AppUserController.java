@@ -53,10 +53,15 @@ public class AppUserController {
         this.userService = userService;
     }
 
+
+    @CrossOrigin
+
     @GetMapping(path = "/users")
+
     public List<AppUser> getUsers () {
         return userService.getUsers();
     }
+
 
     @GetMapping(path = "/profile/{username}")
     public ResponseEntity<AppUser> getUserProfileByUsername(@PathVariable(value = "username") String username) {
@@ -71,6 +76,7 @@ public class AppUserController {
     @DeleteMapping(path = "/{id}/delete")
     @Transactional
     public ResponseEntity<?> deleteUser (@PathVariable("id") Long id) {
+
         userService.deleteUser(id);
         return ResponseEntity.ok(new MessageResponse("Deleted successfully!"));
     }
@@ -151,9 +157,11 @@ public class AppUserController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+
     @PostMapping("/logout")
     public ResponseEntity<?> logoutUser() {
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok(new MessageResponse("Log out successful!"));
+
     }
 }

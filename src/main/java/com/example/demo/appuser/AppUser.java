@@ -8,9 +8,11 @@ import org.apache.tomcat.jni.Local;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 //import org.hibernate.validator.constraints.NotBlank;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+
 
 @Getter
 @Setter
@@ -49,6 +51,7 @@ public class AppUser {
     private String email;
 
     @NotBlank(message = "A password is required")
+
 //    @Min(3)
 //    @Max(25)
     @JsonIgnore
