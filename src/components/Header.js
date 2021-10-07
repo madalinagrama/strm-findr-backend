@@ -114,11 +114,11 @@ const Header = () => {
                                     Login
                                 </NavLink>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <NavLink {...navLinkProps} to="/register">
                                     Register
                                 </NavLink>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <button {...logoutButtonProps}>Logout</button>
                             </li>
