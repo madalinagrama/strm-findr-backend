@@ -53,10 +53,7 @@ public class AppUserController {
         this.userService = userService;
     }
 
-
-    @CrossOrigin
-
-    @GetMapping(path = "/users")
+    @GetMapping(path = "/")
 
     public List<AppUser> getUsers () {
         return userService.getUsers();
