@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
 
@@ -114,11 +114,11 @@ const Header = () => {
                                     Login
                                 </NavLink>
                             </li>
-                            {/* <li className="nav-item">
+                             <li className="nav-item">
                                 <NavLink {...navLinkProps} to="/register">
                                     Register
                                 </NavLink>
-                            </li> */}
+                            </li>
                             <li className="nav-item">
                                 <button {...logoutButtonProps}>Logout</button>
                             </li>
