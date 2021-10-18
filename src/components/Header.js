@@ -113,7 +113,7 @@ const Header = () => {
                         {currentUser ? (
                             <ul className="navbar-nav mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <NavLink {...navLinkProps} to={`/myProfile/${currentUser.id}`}>
+                                    <NavLink {...navLinkProps} to={`/profile/${currentUser.id}`}>
                                         {currentUser.username}
                                     </NavLink>
                                 </li>

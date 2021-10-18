@@ -14,7 +14,7 @@ import Spinner from "./components/Spinner";
 import "./App.css";
 import Login from "./components/auth/components/Login";
 import Register from "./components/auth/components/Register";
-import UserProfile from "./components/profile/UserProfile";
+import UserProfile from "./components/user/UserProfile";
 
 
 export const userAtom = atom(true)
@@ -83,7 +83,7 @@ const App = () => {
 
                         <Route path="/login" exact component={Login} />
 
-                        <Route exact path="/profile">
+                        <Route exact path="/profile/username">
                             <UserProfile/>
                         </Route>
 
