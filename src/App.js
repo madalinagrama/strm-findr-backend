@@ -9,13 +9,13 @@ import Index from "./components/Index";
 import Country from "./components/Country";
 import Genre from "./components/Genre";
 import About from "./components/About";
-import AuthPage from "./pages/AuthPage";
-import ProfilePage from "./pages/ProfilePage";
 import Spinner from "./components/Spinner";
 
 import "./App.css";
-import UserPage from "./components/UserPage";
-import RegisterPage from "./pages/RegisterPage";
+import Login from "./components/auth/components/Login";
+import Register from "./components/auth/components/Register";
+import UserProfile from "./components/profile/UserProfile";
+
 
 export const userAtom = atom(true)
 export const tokenAtom = atom(false)
@@ -78,15 +78,13 @@ const App = () => {
                         </Route>
 
                         <Route path="/register">
-                            <RegisterPage />
+                            <Register />
                         </Route>
 
-                        <Route exact path="/login">
-                            <AuthPage />
-                        </Route>
+                        <Route path="/login" exact component={Login} />
 
                         <Route exact path="/profile">
-                            <ProfilePage />
+                            <UserProfile/>
                         </Route>
 
                         <Route exact path="/">

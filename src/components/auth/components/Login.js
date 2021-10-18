@@ -3,7 +3,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import classes from "./AuthForm.module.css";
 import {Component} from "react";
-import AuthService from "../../services/auth.service"
+import AuthService from "./services/auth.service"
 
 const required = value => {
     if (!value) {

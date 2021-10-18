@@ -1,12 +1,10 @@
-import React, { Fragment, useContext } from "react";
+import React, {Fragment, useContext, useState} from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
-
+import AuthService from "../components/auth/components/services/auth.service";
 import Dropdown from "./Dropdown";
 import logo from "./img/Logo.png";
-
 import state from "../stateManager";
-
 import ImageSlider from "./ImageSlider";
 
 const Header = () => {
@@ -17,6 +15,7 @@ const Header = () => {
     const [countries] = useAtom(state.countriesListAtom);
     const [genres] = useAtom(state.genresListAtom);
     const location = useLocation();
+    const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
 
     const handleCountryChange = (e) => {
         e.preventDefault();
@@ -33,6 +32,10 @@ const Header = () => {
         setKeyword(e.target.searchbox.value);
         setLoading(true);
     };
+
+    function logOut() {
+        AuthService.logout();
+    }
 
     const logoProps = {
         src: logo,
@@ -107,7 +110,20 @@ const Header = () => {
                                 </NavLink>
                             </li>
                         </ul>
-
+                        {currentUser ? (
+                            <ul className="navbar-nav mb-2 mb-lg-0">
+                                <li className="nav-item">
+                                    <NavLink {...navLinkProps} to={`/myProfile/${currentUser.id}`}>
+                                        {currentUser.username}
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink {...logoutButtonProps} to="/login" onClick={logOut}>
+                                        Logout
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        ) : (
                         <ul className="navbar-nav mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <NavLink {...navLinkProps} to="/login">
@@ -119,10 +135,7 @@ const Header = () => {
                                     Register
                                 </NavLink>
                             </li>
-                            <li className="nav-item">
-                                <button {...logoutButtonProps}>Logout</button>
-                            </li>
-                        </ul>
+                        </ul>)}
                     </div>
                 </div>
             </nav>
