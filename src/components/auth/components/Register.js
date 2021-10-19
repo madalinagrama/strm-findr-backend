@@ -41,27 +41,23 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        errorHandling();
+        AuthService.register(username, email, password).then(
+            (response) => {
+                setMessage(response.data.message);
+                setSuccessful(true);
+            },
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
 
-        if (successful) {
-            AuthService.register(username, email, password).then(
-                (response) => {
-                    setMessage(response.data.message);
-                    setSuccessful(true);
-                },
-                (error) => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-
-                    setMessage(resMessage);
-                    setSuccessful(false);
-                }
-            );
-        }
+                setMessage(resMessage);
+                setSuccessful(false);
+            }
+        );
     };
 
     return (
@@ -132,7 +128,7 @@ const Register = () => {
             {successful && (
                 <div className="row">
                     <div className="col">
-                        <Link to="/">Go to Homepage</Link>
+                        <Link className="btn btn-primary" to="/">Go to Homepage</Link>
                     </div>
                 </div>
             )}
