@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import AuthService from "./services/auth.service";
 import isEmail from "validator/es/lib/isEmail";
@@ -72,7 +72,7 @@ const Register = () => {
             />
             <form onSubmit={handleRegister}>
                 {!successful && (
-                    <div>
+                    <Fragment>
                         <div className={classes.control}>
                             <label htmlFor="username">Username</label>
                             <input
@@ -111,12 +111,11 @@ const Register = () => {
                                 required
                             />
                         </div>
-
-                        <div className={classes.actions}>
-                            <button>Sign Up</button>
-                        </div>
-                    </div>
+                    </Fragment>
                 )}
+                <div className={classes.actions}>
+                    <button>Sign Up</button>
+                </div>
                 {!!message && (
                     <div className="form-group">
                         <div
