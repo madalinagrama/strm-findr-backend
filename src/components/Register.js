@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAtom } from "jotai";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import state from "../stateManager";
 import isEmail from "validator/es/lib/isEmail";
@@ -13,7 +13,6 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("cv");
-    const [successful, setSuccessful] = useState(false);
 
     const [_currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
 
@@ -31,10 +30,8 @@ const Register = () => {
 
         if (errors.length) {
             setMessage(errors.join(" "));
-            setSuccessful(false);
         } else {
             setMessage(errors.join(" "));
-            setSuccessful(true);
         }
     };
 
@@ -47,9 +44,8 @@ const Register = () => {
 
         AuthService.register(username, email, password).then(
             (response) => {
-                setMessage(response.data.message);
-                setSuccessful(true);
                 setCurrentUser(username);
+                return <Redirect to={`/profile/${username}`} />;
             },
             (error) => {
                 const resMessage =
@@ -58,7 +54,6 @@ const Register = () => {
                     error.toString();
 
                 setMessage(resMessage);
-                setSuccessful(false);
             }
         );
     };
@@ -101,27 +96,9 @@ const Register = () => {
                 </form>
 
                 {!!message && (
-                    <div
-                        className={
-                            successful
-                                ? "mt-3 alert alert-success"
-                                : "mt-3 alert alert-danger"
-                        }
-                    >
-                        {message}
-                    </div>
+                    <div className="mt-3 alert alert-danger">{message}</div>
                 )}
             </div>
-
-            {successful && (
-                <div className="row">
-                    <div className="col">
-                        <Link className="btn btn-primary" to="/">
-                            Go to Homepage
-                        </Link>
-                    </div>
-                </div>
-            )}
         </section>
     );
 };
