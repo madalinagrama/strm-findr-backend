@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import AuthService from "./services/auth.service";
 import isEmail from "validator/es/lib/isEmail";
@@ -28,6 +28,7 @@ const Register = () => {
             setMessage(errors.join(" "));
             setSuccessful(false);
         } else {
+            setMessage(errors.join(" "));
             setSuccessful(true);
         }
     };
@@ -71,48 +72,44 @@ const Register = () => {
                 className="profile-img-card"
             />
             <form onSubmit={handleRegister}>
-                {!successful && (
-                    <Fragment>
-                        <div className={classes.control}>
-                            <label htmlFor="username">Username</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="username"
-                                placeholder="Enter username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            />
-                        </div>
+                <div className={classes.control}>
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="username"
+                        placeholder="Enter username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
 
-                        <div className={classes.control}>
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="email"
-                                placeholder="Enter email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
+                <div className={classes.control}>
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="email"
+                        placeholder="Enter email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
 
-                        <div className={classes.control}>
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                placeholder="Enter password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                    </Fragment>
-                )}
+                <div className={classes.control}>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        className="form-control"
+                        name="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
                 <div className={classes.actions}>
                     <button>Sign Up</button>
                 </div>
