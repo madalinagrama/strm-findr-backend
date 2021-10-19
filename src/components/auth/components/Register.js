@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router";
 
 import AuthService from "./services/auth.service";
 import isEmail from "validator/es/lib/isEmail";
@@ -128,6 +129,7 @@ const Register = () => {
                     </div>
                 )}
             </form>
+            {successful && setTimeout(() => <Redirect to="/" />, 1000)}
         </section>
     );
 };
