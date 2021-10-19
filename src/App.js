@@ -83,7 +83,7 @@ const App = () => {
 
                         <Route path="/login" exact component={Login} />
 
-                        <Route exact path="/profile/username">
+                        <Route exact path="/profile/:username">
                             <UserProfile/>
                         </Route>
 

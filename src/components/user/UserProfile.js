@@ -35,7 +35,8 @@ const UserProfile = ({ className, ...rest }) => {
 
     async function getUser() {
         return userService.getUser(currentUser.username).then((res) => {
-            setUser(res.data)
+            setUser(res.data);
+            setCurrentUser(res.data);
         });
     }
 

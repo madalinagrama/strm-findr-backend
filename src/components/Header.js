@@ -16,6 +16,7 @@ const Header = () => {
     const [genres] = useAtom(state.genresListAtom);
     const location = useLocation();
     const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
+    console.log(currentUser);
 
     const handleCountryChange = (e) => {
         e.preventDefault();
@@ -110,7 +111,7 @@ const Header = () => {
                                 </NavLink>
                             </li>
                         </ul>
-                        {currentUser ? (
+                        {currentUser !== null ? (
                             <ul className="navbar-nav mb-2 mb-lg-0">
                                 <li className="nav-item">
                                     <NavLink {...navLinkProps} to={`/profile/${currentUser.id}`}>
@@ -118,7 +119,7 @@ const Header = () => {
                                     </NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink {...logoutButtonProps} to="/login" onClick={logOut}>
+                                    <NavLink {...logoutButtonProps} to="/" onClick={logOut}>
                                         Logout
                                     </NavLink>
                                 </li>
