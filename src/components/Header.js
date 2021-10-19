@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useState} from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
 import AuthService from "../components/auth/components/services/auth.service";
@@ -15,7 +15,9 @@ const Header = () => {
     const [countries] = useAtom(state.countriesListAtom);
     const [genres] = useAtom(state.genresListAtom);
     const location = useLocation();
-    const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
+    const [currentUser, setCurrentUser] = useState(
+        AuthService.getCurrentUser()
+    );
     // console.log(currentUser);
 
     const handleCountryChange = (e) => {
@@ -111,32 +113,41 @@ const Header = () => {
                                 </NavLink>
                             </li>
                         </ul>
-                        {currentUser !== null ? (
+                        {currentUser && (
                             <ul className="navbar-nav mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <NavLink {...navLinkProps} to={`/profile/${currentUser.id}`}>
+                                    <NavLink
+                                        {...navLinkProps}
+                                        to={`/profile/${currentUser.id}`}
+                                    >
                                         {currentUser.username}
                                     </NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink {...logoutButtonProps} to="/" onClick={logOut}>
+                                    <NavLink
+                                        {...logoutButtonProps}
+                                        to="/"
+                                        onClick={logOut}
+                                    >
                                         Logout
                                     </NavLink>
                                 </li>
                             </ul>
-                        ) : (
-                        <ul className="navbar-nav mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <NavLink {...navLinkProps} to="/login">
-                                    Login
-                                </NavLink>
-                            </li>
-                             <li className="nav-item">
-                                <NavLink {...navLinkProps} to="/register">
-                                    Register
-                                </NavLink>
-                            </li>
-                        </ul>)}
+                        )}
+                        {!currentUser && (
+                            <ul className="navbar-nav mb-2 mb-lg-0">
+                                <li className="nav-item">
+                                    <NavLink {...navLinkProps} to="/login">
+                                        Login
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink {...navLinkProps} to="/register">
+                                        Register
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        )}
                     </div>
                 </div>
             </nav>
