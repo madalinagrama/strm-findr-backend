@@ -48,11 +48,7 @@ const Register = () => {
         this.form.validateAll();
 
         if (this.checkBtn.context._errors.length === 0) {
-            AuthService.register(
-                username,
-                this.state.email,
-                this.state.password
-            ).then(
+            AuthService.register(username, email, password).then(
                 (response) => {
                     setMessage(response.data.message);
                     setSuccessful(true);
@@ -85,7 +81,7 @@ const Register = () => {
                     this.form = c;
                 }}
             >
-                {!this.state.successful && (
+                {!successful && (
                     <div>
                         <div className={classes.control}>
                             <label htmlFor="username">Username</label>
