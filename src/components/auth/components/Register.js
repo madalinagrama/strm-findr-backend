@@ -1,8 +1,4 @@
-import React, { useState } from "react";
-
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+import React, { useState, useEffect } from "react";
 
 import AuthService from "./services/auth.service";
 import isEmail from "validator/es/lib/isEmail";
@@ -16,55 +12,41 @@ const Register = () => {
     const [message, setMessage] = useState("");
     const [successful, setSuccessful] = useState(false);
 
-    const validations = {
-        required: (value) => {
-            if (!value) {
-                setMessage("This field is required!");
-            }
-        },
-        email: (value) => {
-            if (!isEmail(value)) {
-                setMessage("This is not a valid email.");
-            }
-        },
-        vusername: (value) => {
-            if (value.length < 3 || value.length > 25) {
-                setMessage("The username must be between 3 and 25 characters.");
-            }
-        },
-        vpassword: (value) => {
-            if (value.length < 3 || value.length > 25) {
-                setMessage("The password must be between 3 and 25 characters.");
-            }
-        },
-    };
+    useEffect(() => {
+        const errors = [
+            !username.length && "Username is required!",
+            (username.length < 3 || username.length > 25) && "The username must be between 3 and 25 characters.",
+            !email.length && "Email is required!",
+            !isEmail(email.length) && "Email is not valid!",
+            !password.length && "Password is required!",
+            (password.length < 3 || password.length > 25) && "The password must be between 3 and 25 characters.",
+        ].filter((x) => !!x);
+
+        if (errors.length) {
+            setMessage(errors.join(" "));
+        }
+    }, [username, email, password]);
 
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        setMessage("");
-        setSuccessful(true);
-
-        this.form.validateAll();
-
-        if (this.checkBtn.context._errors.length === 0) {
-            AuthService.register(username, email, password).then(
-                (response) => {
-                    setMessage(response.data.message);
-                    setSuccessful(true);
-                },
-                (error) => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-                    setMessage(resMessage);
-                    setSuccessful(false);
-                }
-            );
-        }
+        AuthService.register(username, email, password).then(
+            (response) => {
+                setMessage(response.data.message);
+                setSuccessful(true);
+            },
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                
+                setMessage(resMessage);
+                setSuccessful(false);
+            }
+        );
     };
 
     return (
@@ -75,17 +57,12 @@ const Register = () => {
                 alt="profile-img"
                 className="profile-img-card"
             />
-            <Form
-                onSubmit={handleRegister}
-                ref={(c) => {
-                    this.form = c;
-                }}
-            >
+            <form onSubmit={handleRegister}>
                 {!successful && (
                     <div>
                         <div className={classes.control}>
                             <label htmlFor="username">Username</label>
-                            <Input
+                            <input
                                 type="text"
                                 className="form-control"
                                 name="username"
@@ -101,7 +78,7 @@ const Register = () => {
 
                         <div className={classes.control}>
                             <label htmlFor="email">Email</label>
-                            <Input
+                            <input
                                 type="text"
                                 className="form-control"
                                 name="email"
@@ -117,7 +94,7 @@ const Register = () => {
 
                         <div className={classes.control}>
                             <label htmlFor="password">Password</label>
-                            <Input
+                            <input
                                 type="password"
                                 className="form-control"
                                 name="password"
@@ -150,13 +127,7 @@ const Register = () => {
                         </div>
                     </div>
                 )}
-                <CheckButton
-                    style={{ display: "none" }}
-                    ref={(c) => {
-                        this.checkBtn = c;
-                    }}
-                />
-            </Form>
+            </form>
         </section>
     );
 };
