@@ -12,9 +12,10 @@ import About from "./components/About";
 import Spinner from "./components/Spinner";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import UserProfile from "./components/UserProfile";
 
 import "./App.css";
-import UserProfile from "./components/user/UserProfile";
+// import UserProfile from "./components/user/UserProfile";
 
 export const userAtom = atom(true);
 export const tokenAtom = atom(false);
