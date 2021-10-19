@@ -10,10 +10,10 @@ import Country from "./components/Country";
 import Genre from "./components/Genre";
 import About from "./components/About";
 import Spinner from "./components/Spinner";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 import "./App.css";
-import Login from "./components/auth/components/Login";
-import Register from "./components/auth/components/Register";
 import UserProfile from "./components/user/UserProfile";
 
 export const userAtom = atom(true);
@@ -63,16 +63,20 @@ const App = () => {
     return (
         <Router>
             <Header />
+
             {loading && <Spinner />}
+
             {!loading && (
                 <div className="container mt-3">
                     <Switch>
                         <Route path="/country/:country">
                             <Country />
                         </Route>
+
                         <Route path="/genre/:genre">
                             <Genre />
                         </Route>
+
                         <Route path="/about">
                             <About />
                         </Route>
@@ -81,7 +85,7 @@ const App = () => {
                             <Register />
                         </Route>
 
-                        <Route path="/login" exact>
+                        <Route path="/login">
                             <Login />
                         </Route>
 

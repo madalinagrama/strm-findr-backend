@@ -1,9 +1,12 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAtom } from "jotai";
+
 import AuthService from "../components/auth/components/services/auth.service";
+
+import logo from "../img/Logo.png";
+
 import Dropdown from "./Dropdown";
-import logo from "./img/Logo.png";
 import state from "../stateManager";
 import ImageSlider from "./ImageSlider";
 
@@ -14,15 +17,15 @@ const Header = () => {
     const [_loading, setLoading] = useAtom(state.loadingAtom);
     const [countries] = useAtom(state.countriesListAtom);
     const [genres] = useAtom(state.genresListAtom);
-    const [currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
-    
+    const [currentUser] = useAtom(state.currentUserAtom);
+
     const location = useLocation();
 
     const handleCountryChange = (e) => {
         e.preventDefault();
         setCountry(e.target.dataset.id);
     };
-    
+
     const handleGenreChange = (e) => {
         e.preventDefault();
         console.log("genre is" + e.target.dataset.id);

@@ -1,5 +1,5 @@
 import React from "react";
-import ImageNotFound from "./img/ImageNotFound.png";
+import ImageNotFound from "../img/ImageNotFound.png";
 
 const Card = ({ image, title, overview, id, service, countries }) => {
     const picture = image || ImageNotFound;

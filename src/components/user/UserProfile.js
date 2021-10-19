@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import classes from "./UserProfile.module.css";
 import clsx from "clsx";
 import AuthService from "../auth/components/services/auth.service";
 import * as userService from "./service/UserService";
 import {
     Avatar,
     Box,
-    Button,
     Card,
-    CardActions,
     CardContent,
-    Divider,
     Typography,
     makeStyles,
 } from "@material-ui/core";
