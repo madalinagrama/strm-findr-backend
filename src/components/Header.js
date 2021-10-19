@@ -16,7 +16,7 @@ const Header = () => {
     const [genres] = useAtom(state.genresListAtom);
     const location = useLocation();
     const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
-    console.log(currentUser);
+    // console.log(currentUser);
 
     const handleCountryChange = (e) => {
         e.preventDefault();

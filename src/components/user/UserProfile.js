@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./UserProfile.module.css";
 import clsx from "clsx";
-import AuthService from "../auth/components/services/auth.service"
+import AuthService from "../auth/components/services/auth.service";
 import * as userService from "./service/UserService";
 import {
     Avatar,
@@ -25,13 +25,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 const UserProfile = ({ className, ...rest }) => {
-    const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
+    const [currentUser, setCurrentUser] = useState(
+        AuthService.getCurrentUser()
+    );
     const [user, setUser] = useState({});
     const classes = useStyles();
 
     useEffect(() => {
         getUser();
-        }, []);
+    }, []);
 
     async function getUser() {
         return userService.getUser(currentUser.username).then((res) => {

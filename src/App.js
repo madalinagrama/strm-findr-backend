@@ -81,7 +81,9 @@ const App = () => {
                             <Register />
                         </Route>
 
-                        <Route path="/login" exact component={Login} />
+                        <Route path="/login" exact>
+                            <Login />
+                        </Route>
 
                         <Route exact path="/profile/:username">
                             <UserProfile />
