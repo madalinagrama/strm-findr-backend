@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "api/auth")
+@RequestMapping(path = "/api/auth")
 @AllArgsConstructor
 @CrossOrigin
 @Slf4j
@@ -54,7 +54,6 @@ public class AppUserController {
     }
 
     @GetMapping(path = "/")
-
     public List<AppUser> getUsers () {
         return userService.getUsers();
     }
@@ -91,27 +90,23 @@ public class AppUserController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+        String jwt = jwtUtils.generateJwtToken(authentication);
 
-        List<String> roles = userDetailsImpl.getAuthorities().stream()
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-        log.info(String.valueOf(roles));
 
-        String jwt = jwtUtils.generateJwtToken(loginRequest.getUsername(), roles);
-
-        return ResponseEntity.ok(
-                new JwtResponse(
-                        jwt,
-                        userDetailsImpl.getId(),
-                        userDetailsImpl.getUsername(),
-                        userDetailsImpl.getEmail(),
-                        roles
-                ));
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles));
     }
 
     @PostMapping(path = "/register")
@@ -131,7 +126,6 @@ public class AppUserController {
 
         Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
-        System.out.println("strRoles: " + strRoles);
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -158,7 +152,6 @@ public class AppUserController {
                 }
             });
         }
-        System.out.println("roles" + roles);
         user.setRoles(roles);
         user.setJoinedDate(LocalDate.now());
         appUserRepository.save(user);

@@ -21,30 +21,25 @@ public class JwtUtils {
     private String jwtSecret;
     @Value("${strmFinder.app.jwtExpirationMs}")
     private int jwtExpirationMs;
+    private final String rolesFieldName = "roles";
 
-    public String generateJwtToken(String username, List<String> roles) {
-        return generateJwtTokenFromUsername(username, roles);
-    }
+    public String generateJwtToken(Authentication authentication) {
 
-    private String generateJwtTokenFromUsername(String username, List<String> roles) {
-        Claims claims = Jwts.claims().setSubject(username);
-        claims.put("roles", roles);
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        System.out.println(userPrincipal);
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + jwtExpirationMs);
+
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setSubject((userPrincipal.getUsername()))
+                .setIssuedAt(now)
+                .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
-    }
-
-    public Claims getParsedToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret)
-                .parseClaimsJws(token).getBody();
     }
 
     public boolean validateJwtToken(String authToken) {
