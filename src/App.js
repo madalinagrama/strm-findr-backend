@@ -38,6 +38,7 @@ const App = () => {
                             overview: r.overview.slice(0, 150) + "...",
                             id: r.imdbID,
                             service: r.streamingInfo,
+                            countries: r.countries,
                         });
                     });
 
