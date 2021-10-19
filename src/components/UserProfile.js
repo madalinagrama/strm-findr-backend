@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import state from "../stateManager";
 import { getUser } from "./user/service/UserService";
 
