@@ -14,16 +14,15 @@ const Header = () => {
     const [_loading, setLoading] = useAtom(state.loadingAtom);
     const [countries] = useAtom(state.countriesListAtom);
     const [genres] = useAtom(state.genresListAtom);
+    const [currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
+    
     const location = useLocation();
-    const [currentUser, setCurrentUser] = useState(
-        AuthService.getCurrentUser()
-    );
-    // console.log(currentUser);
 
     const handleCountryChange = (e) => {
         e.preventDefault();
         setCountry(e.target.dataset.id);
     };
+    
     const handleGenreChange = (e) => {
         e.preventDefault();
         console.log("genre is" + e.target.dataset.id);

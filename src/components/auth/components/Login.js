@@ -1,150 +1,98 @@
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+// import Form from "react-validation/build/form";
+// import Input from "react-validation/build/input";
+// import CheckButton from "react-validation/build/button";
 import classes from "./AuthForm.module.css";
-import {Component} from "react";
-import AuthService from "./services/auth.service"
+import { useState, useEffect } from "react";
+import { useAtom } from "jotai";
+import { Redirect } from "react-router";
+import state from "../../../stateManager";
 
-const required = value => {
-    if (!value) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This field is required!
-            </div>
-        );
-    }
-};
+import AuthService from "./services/auth.service";
 
-export default class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.handleLogin = this.handleLogin.bind(this);
-        this.onChangeUsername = this.onChangeUsername.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+const Login = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
 
-        this.state = {
-            username: "",
-            password: "",
-            loading: false,
-            message: ""
-        };
-    }
-
-    onChangeUsername(e) {
-        this.setState({
-            username: e.target.value
-        });
-    }
-
-    onChangePassword(e) {
-        this.setState({
-            password: e.target.value
-        });
-    }
-
-    async redirectUser() {
-        await this.props.history.push(`/profile/${this.state.username}`);
-    }
-
-    handleLogin(e) {
+    const handleLogin = (e) => {
         e.preventDefault();
 
-        this.setState({
-            message: "",
-            loading: true
-        });
+        setMessage("");
+        setLoading(true);
 
-        this.form.validateAll();
+        AuthService.login(username, password).then(
+            () => {
+                setCurrentUser(username);
+                return <Redirect to={`/profile/${username}`} />;
+            },
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
 
-        if (this.checkBtn.context._errors.length === 0) {
-            AuthService.login(this.state.username, this.state.password).then(
-                () => {
-                    this.redirectUser();
-                },
-                error => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-
-                    this.setState({
-                        loading: false,
-                        message: resMessage
-                    });
-                }
-            );
-        } else {
-            this.setState({
-                loading: false
-            });
-        }
-    }
-
-    render() {
-        return (
-            <section className={classes.auth}>
-                <h2>Login on StrmFinder</h2>
-                <img
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    alt="profile-img"
-                    className="profile-img-card"
-                />
-                <Form
-                    onSubmit={this.handleLogin}
-                    ref={c => {
-                        this.form = c;
-                    }}
-                >
-                    <div className={classes.control}>
-                        <label htmlFor="username">Username</label>
-                        <Input
-                            type="text"
-                            className="form-control"
-                            name="username"
-                            placeholder="Enter username"
-                            value={this.state.username}
-                            onChange={this.onChangeUsername}
-                            validations={[required]}
-                        />
-                    </div>
-                    <div className={classes.control}>
-                        <label htmlFor="password">Password</label>
-                        <Input
-                            type="password"
-                            className="form-control"
-                            name="password"
-                            placeholder="Enter password"
-                            value={this.state.password}
-                            onChange={this.onChangePassword}
-                            validations={[required]}
-                        />
-                    </div>
-                    <div className={classes.actions}>
-                        <button disabled={this.state.loading}>
-                            {this.state.loading && (
-                                <span className="spinner-border spinner-border-sm"> </span>
-                            )}
-                            <span>Login</span>
-                        </button>
-                    </div>
-                    {this.state.message && (
-                        <div className="form-group">
-                            <div className="alert alert-danger" role="alert">
-                                {this.state.message}
-                            </div>
-                        </div>
-                    )}
-                    <CheckButton
-                        style={{ display: "none" }}
-                        ref={c => {
-                            this.checkBtn = c;
-                        }}
-                    />
-                </Form>
-            </section>
+                setLoading(false);
+                setMessage(resMessage);
+            }
         );
-    }
-}
+    };
 
+    return (
+        <section className={classes.auth}>
+            <h2>Login on StrmFinder</h2>
+            <img
+                src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                alt="profile-img"
+                className="profile-img-card"
+            />
+            <form onSubmit={handleLogin}>
+                <div className={classes.control}>
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="username"
+                        placeholder="Enter username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className={classes.control}>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        className="form-control"
+                        name="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className={classes.actions}>
+                    <button disabled={loading}>
+                        {loading && (
+                            <span className="spinner-border spinner-border-sm"></span>
+                        )}
+                        <span>Login</span>
+                    </button>
+                </div>
+
+                {!!message && (
+                    <div className="form-group">
+                        <div className="alert alert-danger" role="alert">
+                            {message}
+                        </div>
+                    </div>
+                )}
+            </form>
+        </section>
+    );
+};
+
+export default Login;
