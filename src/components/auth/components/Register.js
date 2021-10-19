@@ -45,7 +45,7 @@ const Register = () => {
         setMessage("");
         setSuccessful(true);
 
-        e.target.validateAll();
+        this.form.validateAll();
 
         if (this.checkBtn.context._errors.length === 0) {
             AuthService.register(
@@ -80,7 +80,7 @@ const Register = () => {
                 className="profile-img-card"
             />
             <Form
-                onSubmit={this.handleRegister}
+                onSubmit={handleRegister}
                 ref={(c) => {
                     this.form = c;
                 }}
