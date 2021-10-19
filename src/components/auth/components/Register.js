@@ -129,7 +129,7 @@ const Register = () => {
                     </div>
                 )}
             </form>
-            {successful && setTimeout(() => <Redirect to="/" />, 1000)}
+            {successful && <Redirect to="/" />}
         </section>
     );
 };
