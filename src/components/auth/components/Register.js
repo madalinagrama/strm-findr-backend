@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 import AuthService from "./services/auth.service";
 import isEmail from "validator/es/lib/isEmail";
@@ -129,7 +129,13 @@ const Register = () => {
                     </div>
                 )}
             </form>
-            {successful && <Redirect to="/" />}
+            {successful && (
+                <div className="row">
+                    <div className="col">
+                        <Link to="/">Go to Homepage</Link>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };
