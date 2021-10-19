@@ -18,7 +18,7 @@ const Register = () => {
             (username.length < 3 || username.length > 25) &&
                 "The username must be between 3 and 25 characters.",
             !email.length && "Email is required!",
-            !isEmail(email.length) && "Email is not valid!",
+            !isEmail(email) && "Email is not valid!",
             !password.length && "Password is required!",
             (password.length < 3 || password.length > 25) &&
                 "The password must be between 3 and 25 characters.",
