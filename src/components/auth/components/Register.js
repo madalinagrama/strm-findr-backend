@@ -12,41 +12,54 @@ const Register = () => {
     const [message, setMessage] = useState("");
     const [successful, setSuccessful] = useState(false);
 
-    useEffect(() => {
+    const errorHandling = () => {
         const errors = [
             !username.length && "Username is required!",
-            (username.length < 3 || username.length > 25) && "The username must be between 3 and 25 characters.",
+            (username.length < 3 || username.length > 25) &&
+                "The username must be between 3 and 25 characters.",
             !email.length && "Email is required!",
             !isEmail(email.length) && "Email is not valid!",
             !password.length && "Password is required!",
-            (password.length < 3 || password.length > 25) && "The password must be between 3 and 25 characters.",
+            (password.length < 3 || password.length > 25) &&
+                "The password must be between 3 and 25 characters.",
         ].filter((x) => !!x);
 
         if (errors.length) {
             setMessage(errors.join(" "));
+            setSuccessful(false);
+        } else {
+            setSuccessful(true);
         }
+    };
+
+    useEffect(() => {
+        errorHandling();
     }, [username, email, password]);
 
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        AuthService.register(username, email, password).then(
-            (response) => {
-                setMessage(response.data.message);
-                setSuccessful(true);
-            },
-            (error) => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                
-                setMessage(resMessage);
-                setSuccessful(false);
-            }
-        );
+        errorHandling();
+
+        if (successful) {
+            AuthService.register(username, email, password).then(
+                (response) => {
+                    setMessage(response.data.message);
+                    setSuccessful(true);
+                },
+                (error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+
+                    setMessage(resMessage);
+                    setSuccessful(false);
+                }
+            );
+        }
     };
 
     return (
