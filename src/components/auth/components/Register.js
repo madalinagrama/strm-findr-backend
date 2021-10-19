@@ -82,10 +82,7 @@ const Register = () => {
                                 placeholder="Enter username"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                validations={[
-                                    validations.required,
-                                    validations.vusername,
-                                ]}
+                                required
                             />
                         </div>
 
@@ -98,10 +95,7 @@ const Register = () => {
                                 placeholder="Enter email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                validations={[
-                                    validations.required,
-                                    validations.email,
-                                ]}
+                                required
                             />
                         </div>
 
@@ -114,10 +108,7 @@ const Register = () => {
                                 placeholder="Enter password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                validations={[
-                                    validations.required,
-                                    validations.vpassword,
-                                ]}
+                                required
                             />
                         </div>
 
