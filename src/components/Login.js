@@ -14,6 +14,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [success, setSuccess] = useState(false);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -24,7 +25,7 @@ const Login = () => {
         AuthService.login(username, password).then(
             () => {
                 setCurrentUser(username);
-                return <Redirect to={`/profile/${username}`} />;
+                setSuccess(true);
             },
             (error) => {
                 const resMessage =
@@ -78,6 +79,8 @@ const Login = () => {
                 {!!message && (
                     <div className="mt-3 alert alert-danger">{message}</div>
                 )}
+
+                {!!success && <Redirect to={`/profile/${username}`} />}
             </div>
         </section>
     );

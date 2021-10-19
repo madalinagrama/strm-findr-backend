@@ -13,6 +13,7 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("cv");
+    const [success, setSuccess] = useState(false);
 
     const [_currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
 
@@ -45,7 +46,7 @@ const Register = () => {
         AuthService.register(username, email, password).then(
             (response) => {
                 setCurrentUser(username);
-                return <Redirect to={`/profile/${username}`} />;
+                setSuccess(true);
             },
             (error) => {
                 const resMessage =
@@ -90,7 +91,7 @@ const Register = () => {
                         callback={setPassword}
                     />
 
-                    <button type="submit" class="btn btn-outline-light">
+                    <button type="submit" className="btn btn-outline-light">
                         Submit
                     </button>
                 </form>
@@ -98,6 +99,8 @@ const Register = () => {
                 {!!message && (
                     <div className="mt-3 alert alert-danger">{message}</div>
                 )}
+
+                {!!success && <Redirect to={`/profile/${username}`} />}
             </div>
         </section>
     );
