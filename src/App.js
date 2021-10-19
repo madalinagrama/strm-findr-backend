@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import {atom, useAtom} from "jotai";
+import { atom, useAtom } from "jotai";
 import axios from "axios";
 import state from "./stateManager";
 
@@ -16,9 +16,8 @@ import Login from "./components/auth/components/Login";
 import Register from "./components/auth/components/Register";
 import UserProfile from "./components/user/UserProfile";
 
-
-export const userAtom = atom(true)
-export const tokenAtom = atom(false)
+export const userAtom = atom(true);
+export const tokenAtom = atom(false);
 
 const App = () => {
     const [keyword] = useAtom(state.currentKeywordAtom);
@@ -81,10 +80,12 @@ const App = () => {
                             <Register />
                         </Route>
 
-                        <Route path="/login" exact component={Login} />
+                        <Route path="/login" exact>
+                            <Login />
+                        </Route>
 
                         <Route exact path="/profile/:username">
-                            <UserProfile/>
+                            <UserProfile />
                         </Route>
 
                         <Route exact path="/">
