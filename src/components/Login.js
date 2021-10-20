@@ -51,7 +51,7 @@ const Login = () => {
                 <form onSubmit={handleLogin}>
                     <Input
                         id="username"
-                        value={username}
+                        // value={username}
                         label="Username"
                         callback={setUsername}
                     />
