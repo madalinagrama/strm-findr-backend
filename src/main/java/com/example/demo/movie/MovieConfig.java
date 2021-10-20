@@ -414,8 +414,43 @@ public class MovieConfig {
                     "Mayhem and mishaps follow young witch Mildred Hubble wherever she goes. She just can't help it! But with her friends' help, Mildred always manages to avoid dis",
                     "https://image.tmdb.org/t/p/original/fLhJKgPKeBsQaSe0i7VOnRQl37r.jpg",
                     "netflix");
+            Movie movie58 = new Movie("tt6468322",
+                    "Money Heist",
+                    10751,
+                    "RO",
+                    "An unusual group of robbers attempt to carry out the most perfect robbery in Spanish history - stealing 2.4 billion euros from the Royal Mint of Spain.",
+                    "https://m.media-amazon.com/images/M/MV5BNDJkYzY3MzMtMGFhYi00MmQ4LWJkNTgtZGNiZWZmMTMxNzdlXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_FMjpg_UX1000_.jpg",
+                    "netflix");
+            Movie movie59 = new Movie("tt10919420",
+                    "Squid Game",
+                    10751,
+                    "RO",
+                    "Hundreds of cash-strapped players accept a strange invitation to compete in children's games. Inside, a tempting prize awaits with deadly high stakes.",
+                    "https://0.soompi.io/wp-content/uploads/2021/08/23110511/squid-game.jpeg",
+                    "netflix");
+            Movie movie60 = new Movie("tt0944947",
+                    "Game of Thrones",
+                    10751,
+                    "RO",
+                    "Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after being dormant for millennia.",
+                    "https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_FMjpg_UX1000_.jpg",
+                    "HBO");
+            Movie movie61 = new Movie("tt0804484",
+                    "Foundation",
+                    10751,
+                    "RO",
+                    "A complex saga of humans scattered on planets throughout the galaxy all living under the rule of the Galactic Empire.",
+                    "https://m.media-amazon.com/images/M/MV5BMTE5MDY1MGUtMmMxNi00YjA3LWIyZTYtN2FhOWJmNTY2NmM4XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1000_.jpg",
+                    "apple");
+            Movie movie62 = new Movie("tt1869454",
+                    "Good Omens",
+                    10751,
+                    "RO",
+                    "A tale of the bungling of Armageddon features an angel, a demon, an eleven-year-old Antichrist, and a doom-saying witch.",
+                    "https://static.cinemagia.ro/img/db/movie/26/38/497/good-omens-532502l.jpg",
+                    "prime");
 //TODO select All (exist a movie) si daca nu exista in db sa introduca altfel sa ignore
-            movieRepository.saveAll(List.of(movie1, movie2, movie3, movie4, movie5, movie6, movie7, movie8, movie9, movie10, movie11, movie12, movie13, movie14, movie15, movie16, movie17, movie18, movie19,movie20,movie21,movie22,movie23,movie24,movie25,movie26,movie27,movie28,movie29,movie30,movie31,movie32,movie33,movie34,movie35,movie36,movie37,movie38,movie39,movie40,movie41,movie42,movie43,movie44,movie45,movie46,movie47,movie48,movie49,movie50,movie51,movie52,movie53,movie54,movie55,movie56,movie57));
+            movieRepository.saveAll(List.of(movie1, movie2, movie3, movie4, movie5, movie6, movie7, movie8, movie9, movie10, movie11, movie12, movie13, movie14, movie15, movie16, movie17, movie18, movie19,movie20,movie21,movie22,movie23,movie24,movie25,movie26,movie27,movie28,movie29,movie30,movie31,movie32,movie33,movie34,movie35,movie36,movie37,movie38,movie39,movie40,movie41,movie42,movie43,movie44,movie45,movie46,movie47,movie48,movie49,movie50,movie51,movie52,movie53,movie54,movie55,movie56,movie57,movie58,movie59,movie60,movie61,movie62));
         };
     }
 }
