@@ -11,12 +11,14 @@ import java.util.List;
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
-    List<Favorite> getAllByAppUser(AppUser appUser);
-    boolean existsByAppUserId(Long id);
+    List<Favorite> getAllByUser(AppUser appUser);
+
+    boolean existsByMovieIdAndUserId(Long movie_id, Long user_id);
 
     @Modifying
     @Query(value = "DELETE FROM favorite WHERE movie_id= :movieId AND user_id= :userId", nativeQuery = true)
     void deleteByMovieIdAndAppUserId(Long movieId, Long userId);
+
 
 
 }

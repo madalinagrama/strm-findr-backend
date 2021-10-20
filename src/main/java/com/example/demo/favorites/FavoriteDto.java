@@ -19,9 +19,6 @@ public class FavoriteDto {
     @JsonProperty("user_id")
     private Long userId;
 
-    @JsonProperty("name")
-    private String name;
-
     @JsonProperty("movie_id")
     private Long movieId;
 }

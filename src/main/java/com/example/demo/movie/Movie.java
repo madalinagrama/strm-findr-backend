@@ -18,11 +18,11 @@ public class Movie {
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "movie_sequence"
     )
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "movie_sequence",
+            sequenceName = "movie_sequence",
             allocationSize = 1
     )
     private Long id;
@@ -34,7 +34,7 @@ public class Movie {
     private String posterURL;
     private String streamingInfo;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Favorite> favorites;
 

@@ -19,11 +19,11 @@ public class Favorite {
         @SequenceGenerator(name = "favorite_sequence", sequenceName = "favorite_sequence", allocationSize = 1)
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "favorite_sequence")
         private Long id;
-        private String name;
+
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id")
         @JsonIgnore
-        private AppUser appUser;
+        private AppUser user;
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "movie_id")
