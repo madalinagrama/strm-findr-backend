@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(path = "/api/auth")
 @AllArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Slf4j
 public class AppUserController {
 

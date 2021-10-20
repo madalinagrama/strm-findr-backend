@@ -21,7 +21,6 @@ public class JwtUtils {
     private String jwtSecret;
     @Value("${strmFinder.app.jwtExpirationMs}")
     private int jwtExpirationMs;
-    private final String rolesFieldName = "roles";
 
     public String generateJwtToken(Authentication authentication) {
 

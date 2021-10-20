@@ -29,6 +29,8 @@ public class AppUserService {
                 .orElseThrow(() -> new IllegalArgumentException("Could not find user with username: " + username));
     }
 
+
+
     public Optional<AppUser> getUser(Long id) {
         return appUserRepository.findById(id);
     }
