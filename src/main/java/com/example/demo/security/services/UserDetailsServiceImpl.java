@@ -3,7 +3,6 @@ package com.example.demo.security.services;
 import com.example.demo.appuser.AppUser;
 import com.example.demo.appuser.AppUserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
