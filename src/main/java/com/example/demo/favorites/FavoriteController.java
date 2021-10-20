@@ -21,8 +21,9 @@ public class FavoriteController {
 
     @GetMapping(path = "/{userId}")
     public List<Favorite> getAllFavoritesByUserId(@PathVariable Long userId){
-        AppUser appUser = appUserRepository.findUserById(userId);
-        return favoriteRepository.findFavoritesByAppUser(appUser);
+        AppUser appUser = appUserRepository.findById(userId).get();
+        List<Favorite> favorites = favoriteRepository.getAllByAppUser(appUser);
+        return favorites;
     }
 
     @PostMapping(path = "/add_favorites")
