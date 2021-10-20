@@ -100,7 +100,7 @@ const Register = () => {
                     <div className="mt-3 alert alert-danger">{message}</div>
                 )}
 
-                {!!success && <Redirect to={`/profile/${username}`} />}
+                {!!success && <Redirect to={`/login`} />}
             </div>
         </section>
     );

@@ -66,7 +66,7 @@ const Login = () => {
 
                     <button
                         type="submit"
-                        class="btn btn-outline-light"
+                        className="btn btn-outline-light"
                         disabled={loading}
                     >
                         {loading && (

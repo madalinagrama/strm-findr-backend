@@ -4,7 +4,7 @@ export default function authHeader() {
     if (user && user.token) {
         return {
             Authorization: "Bearer " + user.token,
-            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": '*',
         };
     } else {
         return {};

@@ -8,7 +8,7 @@ class AuthService {
     login(username, password) {
         // const [_currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
         return axios
-            .post(API_URL + "login", {
+            .post(API_URL + "/login", {
                 username,
                 password,
             })
@@ -32,7 +32,7 @@ class AuthService {
         // const [_currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
 
         return axios
-            .post(API_URL + "register", {
+            .post(API_URL + "/register", {
                 username,
                 email,
                 password,
