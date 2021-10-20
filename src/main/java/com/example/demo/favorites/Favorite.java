@@ -24,6 +24,6 @@ public class Favorite {
         @JsonIgnore
         private AppUser appUser;
 
-        @OneToMany(cascade = CascadeType.ALL)
+        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         private List<Movie> movies;
 }

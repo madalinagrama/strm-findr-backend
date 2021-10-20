@@ -4,22 +4,36 @@ import com.example.demo.appuser.AppUser;
 import com.example.demo.appuser.AppUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "/api/auth/")
+@RequestMapping(path = "/api/auth/favorites")
 @CrossOrigin
 @Slf4j
 public class FavoriteController {
     private final FavoriteRepository favoriteRepository;
     private final AppUserRepository appUserRepository;
 
-    @GetMapping(path = "/favorites/{id}")
-    public List<Favorite> getAllFavoritesByUserId(@PathVariable Long id){
-        AppUser appUser = appUserRepository.findUserById(id);
+    @GetMapping(path = "/{userId}")
+    public List<Favorite> getAllFavoritesByUserId(@PathVariable Long userId){
+        AppUser appUser = appUserRepository.findUserById(userId);
         return favoriteRepository.findFavoritesByAppUser(appUser);
+    }
+
+    @PostMapping(path = "/add_favorites")
+    public ResponseEntity<?> addFavorites(@RequestBody Favorite favorite) {
+        Favorite favorite1 = new Favorite();
+        log.info(String.valueOf(favorite));
+        favorite1.setAppUser(appUserRepository.findById(favorite.getId()).get());
+        if (!favoriteRepository.existsByAppUser(appUserRepository.findById(favorite.getId()).get().getId())) {
+            favoriteRepository.save(favorite1);
+            return ResponseEntity.ok("Movie was added to favorites!");
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 }
