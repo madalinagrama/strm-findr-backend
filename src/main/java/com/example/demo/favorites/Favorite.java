@@ -24,6 +24,8 @@ public class Favorite {
         @JsonIgnore
         private AppUser appUser;
 
-        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-        private List<Movie> movies;
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "movie_id")
+        @JsonIgnore
+        private Movie movie;
 }

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -29,11 +30,18 @@ public class FavoriteController {
         Favorite favorite1 = new Favorite();
         log.info(String.valueOf(favorite));
         favorite1.setAppUser(appUserRepository.findById(favorite.getId()).get());
-        if (!favoriteRepository.existsByAppUser(appUserRepository.findById(favorite.getId()).get().getId())) {
+        if (!favoriteRepository.existsByAppUserId(appUserRepository.findById(favorite.getId()).get().getId())) {
             favoriteRepository.save(favorite1);
             return ResponseEntity.ok("Movie was added to favorites!");
         } else {
             return ResponseEntity.noContent().build();
         }
+    }
+
+    @DeleteMapping(path = "/remove/{movieId}/{userId}")
+    @Transactional
+    public ResponseEntity<?> deleteFavoriteById(@PathVariable(name = "movieId") Long movieId, @PathVariable(name = "userId") Long userId) {
+        favoriteRepository.deleteByMovieIdAndAppUserId(movieId, userId);
+        return ResponseEntity.ok("Movie with id " + movieId + "removed from favorites");
     }
 }

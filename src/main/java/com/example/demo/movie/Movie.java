@@ -1,5 +1,7 @@
 package com.example.demo.movie;
 
+import com.example.demo.favorites.Favorite;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +33,10 @@ public class Movie {
     private String overview;
     private String posterURL;
     private String streamingInfo;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Favorite> favorites;
 
     public Movie(String imdbID, String originalTitle, int genres, String countries, String overview, String posterURL, String streamingInfo) {
         this.imdbID = imdbID;
