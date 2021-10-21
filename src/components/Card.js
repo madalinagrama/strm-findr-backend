@@ -30,37 +30,27 @@ const Card = ({
 
     const favoriteHandler = async () => {
         console.log(currentUser);
-        // const resp = await axios.get(
-        //     process.env.REACT_APP_BASE_URL + "/user/" + currentUser.id,
+        const resp = await axios.get(
+            process.env.REACT_APP_BASE_URL +
+                "/user/" +
+                currentUser.id +
+                "/favorites",
+            {
+                headers: authHeader(),
+            }
+        );
+
+        console.log(resp);
+
+        // const req = await axios.post(
+        //     process.env.REACT_APP_BASE_URL +
+        //         "/user/" +
+        //         currentUser.id +
+        //         "/favorites/",
         //     {
         //         headers: authHeader(),
         //     }
         // );
-        // console.log("searching" + id);
-        // console.log(resp.data[0].id);
-
-        // if (resp.data.find((t) => t.movie_id === id)) {
-        //     console.log("found id");
-        // } else {
-        //     console.log("not found");
-        // }
-
-        // if (resp.data.id.includes(id)) {
-        //     axios.delete(
-        //         process.env.REACT_APP_FAV_URL + "/" + id + "/" + currentUser.id,
-        //         {
-        //             headers: authHeader(),
-        //         }
-        //     );
-        // } else {
-        //     axios.post(
-        //         process.env.REACT_APP_FAV_URL + "/add-favorite",
-        //         favorites,
-        //         {
-        //             headers: authHeader(),
-        //         }
-        //     );
-        // }
     };
 
     return (
