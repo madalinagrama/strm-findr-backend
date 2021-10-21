@@ -37,9 +37,10 @@ const App = () => {
                             image: r.posterURL,
                             title: r.originalTitle,
                             overview: r.overview.slice(0, 150) + "...",
-                            id: r.imdbID,
+                            imdb: r.imdbID,
                             service: r.streamingInfo,
                             countries: r.countries,
+                            id: r.id,
                         });
                     });
 
