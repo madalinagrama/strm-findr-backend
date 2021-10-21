@@ -120,7 +120,7 @@ const Header = () => {
                                 <li className="nav-item">
                                     <NavLink
                                         {...navLinkProps}
-                                        to={`/profile/${currentUser.id}`}
+                                        to={`/profile/${currentUser.username}`}
                                     >
                                         {currentUser.username}
                                     </NavLink>
@@ -159,6 +159,7 @@ const Header = () => {
             {location.pathname !== "/login" &&
                 location.pathname !== "/register" &&
                 location.pathname !== "/about" && (
+                    // location.pathname !== `/profile/${currentUser.username}` &&
                     <div className="container mt-3">
                         <div className="row">
                             <div className="col-md-6 col-12">
