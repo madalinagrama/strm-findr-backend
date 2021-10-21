@@ -11,16 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.util.List;
 
+
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/api/auth/favorites")
-@CrossOrigin
 @Slf4j
 public class FavoriteController {
 
     private final FavoriteRepository favoriteRepository;
     private final AppUserRepository appUserRepository;
     private final MovieRepository movieRepository;
+    private final FavoriteService favoriteService;
 
     @GetMapping(path = "/{userId}")
     public List<Favorite> getAllFavoritesByUserId(@PathVariable Long userId){
@@ -39,12 +41,9 @@ public class FavoriteController {
         log.info(String.valueOf(favoriteDto.getMovieId()));
         favorite.setMovie(movieRepository.findById(favoriteDto.getMovieId()).get());
 
-        if (!favoriteRepository.existsByMovieIdAndUserId(favoriteDto.getMovieId(),appUserRepository.findById(favoriteDto.getUserId()).get().getId())) {
-            favoriteRepository.save(favorite);
-            return ResponseEntity.ok("Movie was added to favorites!");
-        } else {
-            return ResponseEntity.noContent().build();
-        }
+        favoriteService.addFavorites(favorite);
+
+        return ResponseEntity.ok("Movie added to database");
     }
 
     @Transactional
