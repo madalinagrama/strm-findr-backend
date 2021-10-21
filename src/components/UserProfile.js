@@ -1,9 +1,16 @@
-import { useAtom } from "jotai";
-import { useState, useEffect } from "react";
+import {useAtom} from "jotai";
+import {useState, useEffect} from "react";
 import state from "../stateManager";
-import { getUser } from "./user/service/UserService";
+import {getUser} from "./user/service/UserService";
+import profile from "../img/profile.jpg";
 
 const UserProfile = () => {
+    const profileProps = {
+        src: profile,
+        width: 120,
+        height: 120,
+    };
+
     const [currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
     console.log(currentUser);
     const [user, setUser] = useState({
@@ -26,18 +33,18 @@ const UserProfile = () => {
 
     return (
         <div className="card my-3">
-            {/*<img*/}
-            {/*    src="https://cdn.forums.klei.com/monthly_2019_10/d2ab7d4323482214f463da3a5c12460944ccad0d_full.jpg.4d4cb95b2dbdd5dd9c6befca6e043515.jpg"*/}
-            {/*    className="card-img-top"*/}
-            {/*    alt={user.username}*/}
-            {/*/>*/}
+            <div>
+                <h5>Your Profile</h5>
+            </div>
+            <div>
+                <img {...profileProps} alt={user.username}/>
+            </div>
             <div className="card-body">
-                <h5 className="card-title">{user.username}</h5>
-                <p className="card-text">
-                    {user.email} {user.role}
-                </p>
+                    <h5 className="card-title">Name: {user.username}</h5>
+                    <p className="card-text">Email: {user.email}</p>
             </div>
         </div>
+
     );
 };
 
