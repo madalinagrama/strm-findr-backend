@@ -1,6 +1,7 @@
 package com.example.demo.appuser;
 
 import com.example.demo.auth.models.Role;
+import com.example.demo.favorites.Favorite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.apache.tomcat.jni.Local;
@@ -11,6 +12,7 @@ import javax.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -63,7 +65,12 @@ public class AppUser {
     @JoinTable( name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonIgnore
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Favorite> favorites;
 
     public AppUser( String username, String email, String password) {
         this.username = username;
