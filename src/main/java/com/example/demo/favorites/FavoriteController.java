@@ -24,11 +24,11 @@ public class FavoriteController {
     private final MovieRepository movieRepository;
     private final FavoriteService favoriteService;
 
-    @GetMapping(path = "/")
+    @GetMapping
     public List<Favorite> getAllFavoritesByUserId(@PathVariable Long userId){
         AppUser appUser = appUserRepository.findById(userId).get();
-        log.info(String.valueOf(appUser.getEmail()));
         List<Favorite> favorites = favoriteRepository.getAllByUser(appUser);
+        System.out.println(favorites);
         log.info(String.valueOf(favorites));
         return favorites;
     }
