@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/api/auth")
+@RequestMapping(path = "/user")
 @AllArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Slf4j
@@ -59,7 +59,7 @@ public class AppUserController {
     }
 
 
-    @GetMapping(path = "/profile/{username}")
+    @GetMapping(path = "/{username}")
     public ResponseEntity<AppUser> getUserProfileByUsername(@PathVariable(value = "username") String username) {
         return new ResponseEntity<>(userService.findByUserName(username), HttpStatus.OK);
     }
@@ -77,14 +77,13 @@ public class AppUserController {
         return ResponseEntity.ok(new MessageResponse("Deleted successfully!"));
     }
 
-    @PutMapping(path = "/profile/{id}/edit/{currentUsername}")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<AppUser> editUserProfile(@PathVariable(value = "id") Long id,
-                                                   @PathVariable(value = "currentUsername") String currentUsername,
+//                                                   @PathVariable(value = "currentUsername") String currentUsername,
                                                    @RequestBody AppUser user) {
-        user.getRoles().stream().forEach(role -> {System.out.println(role.getName());
-            System.out.println(role.getId());} );
 
-        AppUser forResponse = userService.updateUser(id, currentUsername, user);
+
+        AppUser forResponse = userService.updateUser(id, user.getUsername(), user);
         return new ResponseEntity<>(forResponse, HttpStatus.OK);
     }
 

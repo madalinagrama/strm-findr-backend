@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "/api/auth/favorites")
+@RequestMapping(path = "/user/{userId}/favorites")
 @Slf4j
 public class FavoriteController {
 
@@ -24,7 +24,7 @@ public class FavoriteController {
     private final MovieRepository movieRepository;
     private final FavoriteService favoriteService;
 
-    @GetMapping(path = "/{userId}")
+    @GetMapping(path = "/")
     public List<Favorite> getAllFavoritesByUserId(@PathVariable Long userId){
         AppUser appUser = appUserRepository.findById(userId).get();
         log.info(String.valueOf(appUser.getEmail()));
@@ -33,7 +33,7 @@ public class FavoriteController {
         return favorites;
     }
 
-    @PostMapping(path = "/add-favorite")
+    @PostMapping(path = "/")
     public ResponseEntity<?> addFavorites(@RequestBody FavoriteDto favoriteDto) {
         Favorite favorite = new Favorite();
         log.info(String.valueOf(favoriteDto));
@@ -47,7 +47,7 @@ public class FavoriteController {
     }
 
     @Transactional
-    @DeleteMapping(path = "/remove/{movieId}/{userId}")
+    @DeleteMapping(path = "/{movieId}")
     public ResponseEntity<?> deleteFavoriteById(@PathVariable(name = "movieId") Long movieId, @PathVariable(name = "userId") Long userId) {
         favoriteRepository.deleteByMovieIdAndAppUserId(movieId, userId);
         return ResponseEntity.ok("Movie with id " + movieId + " removed from favorites");

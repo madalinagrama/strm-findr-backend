@@ -16,8 +16,6 @@ public class FavoriteService {
     public Favorite addFavorites(Favorite favorite) {
         if (!favoriteRepository.existsByMovieIdAndUserId(favorite.getMovie().getId(), favorite.getUser().getId())) {
             favoriteRepository.save(favorite);
-        } else {
-            throw new IllegalArgumentException("favorite not saved");
         }
         return favorite;
     }

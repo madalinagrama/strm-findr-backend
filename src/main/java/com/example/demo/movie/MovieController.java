@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "api/auth/movies")
+@RequestMapping(path = "/movies")
 public class MovieController {
 
     private final MovieService movieService;
