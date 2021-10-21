@@ -5,7 +5,7 @@ const UserPage = () => {
     const [users, setUsers] = useState([]);
 
     const fetchUser = async () => {
-        const resp = await axios.get(process.env.REACT_APP_AUTH_URL);
+        const resp = await axios.get(process.env.REACT_APP_BASE_URL + "/user");
 
         setUsers(resp.data);
     };

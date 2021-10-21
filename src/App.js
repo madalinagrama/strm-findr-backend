@@ -30,7 +30,7 @@ const App = () => {
             let cards = [];
 
             axios
-                .get(process.env.REACT_APP_URL)
+                .get(process.env.REACT_APP_BASE_URL + "/movies")
                 .then((data) => {
                     data.data.forEach((r) => {
                         cards.push({

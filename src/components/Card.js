@@ -1,32 +1,83 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ImageNotFound from "../img/ImageNotFound.png";
 import { useAtom } from "jotai";
 import state from "../stateManager";
 
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import axios from "axios";
+import authHeader from "./auth/components/services/auth-header";
 
-const Card = ({ image, title, overview, id, service, countries, imdb }) => {
-    const picture = image || ImageNotFound;
+const Card = ({
+    image = ImageNotFound,
+    title = "",
+    overview = "",
+    id = "",
+    service = "",
+    countries = "",
+    imdb = "",
+}) => {
     const [currentUser] = useAtom(state.currentUserAtom);
-    const favoriteHandler = (id) => {
-        if (currentUser) {
-            console.log(currentUser, id);
-        }
+    // const [favorites, setFavorites] = useState({});
+
+    // useEffect(() => {
+    //     setFavorites({
+    //         user_id: currentUser.id,
+    //         movie_id: id,
+    //     });
+    // }, []);
+
+    // console.log({ image, title, overview, id, service, countries, imdb });
+
+    const favoriteHandler = async () => {
+        console.log(currentUser);
+        // const resp = await axios.get(
+        //     process.env.REACT_APP_BASE_URL + "/user/" + currentUser.id,
+        //     {
+        //         headers: authHeader(),
+        //     }
+        // );
+        // console.log("searching" + id);
+        // console.log(resp.data[0].id);
+
+        // if (resp.data.find((t) => t.movie_id === id)) {
+        //     console.log("found id");
+        // } else {
+        //     console.log("not found");
+        // }
+
+        // if (resp.data.id.includes(id)) {
+        //     axios.delete(
+        //         process.env.REACT_APP_FAV_URL + "/" + id + "/" + currentUser.id,
+        //         {
+        //             headers: authHeader(),
+        //         }
+        //     );
+        // } else {
+        //     axios.post(
+        //         process.env.REACT_APP_FAV_URL + "/add-favorite",
+        //         favorites,
+        //         {
+        //             headers: authHeader(),
+        //         }
+        //     );
+        // }
     };
 
     return (
         <div className="col-sm-12 col-md-6 col-lg-4 mb-4">
             <div className="bg-dark border card text-white">
-                <img src={picture} className="card-img-top" alt={title} />
+                <img src={image} className="card-img-top" alt={title} />
                 <div className="card-body">
                     <h5 className="card-title">
                         <div className="title">{title}</div>
-                        <button
-                            className="btn btn-light"
-                            onClick={(e) => favoriteHandler(id)}
-                        >
-                            <AiOutlineHeart className="fav" />
-                        </button>
+                        {currentUser?.id && (
+                            <button
+                                className="btn btn-light"
+                                onClick={(e) => favoriteHandler()}
+                            >
+                                <AiOutlineHeart className="fav" />
+                            </button>
+                        )}
                     </h5>
                     <h6 className="card-subtitle mb-2 text-danger">
                         Available on {service.toUpperCase()} in {countries}

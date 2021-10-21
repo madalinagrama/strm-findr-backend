@@ -3,18 +3,22 @@ import authHeader from "./auth-header";
 // import { useAtom } from "jotai";
 // import state from "../../../../stateManager";
 
-const API_URL = process.env.REACT_APP_AUTH_URL;
+const API_URL = process.env.REACT_APP_BASE_URL + "/user";
 
 class AuthService {
     login(username, password) {
         // const [_currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
         return axios
-            .post(API_URL + "/login", {
-                username,
-                password,
-            }, {
-                headers: authHeader(),
-            })
+            .post(
+                API_URL + "/login",
+                {
+                    username,
+                    password,
+                },
+                {
+                    headers: authHeader(),
+                }
+            )
             .then((response) => {
                 if (response.data.token) {
                     localStorage.setItem("user", JSON.stringify(response.data));
@@ -35,14 +39,17 @@ class AuthService {
         // const [_currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
 
         return axios
-            .post(API_URL + "/register", {
-                username,
-                email,
-                password,
-
-            }, {
-                headers: authHeader(),
-            })
+            .post(
+                API_URL + "/register",
+                {
+                    username,
+                    email,
+                    password,
+                },
+                {
+                    headers: authHeader(),
+                }
+            )
             .then((response) => {
                 if (response.data.token) {
                     localStorage.setItem("user", JSON.stringify(response.data));
