@@ -12,6 +12,7 @@ const UserProfile = () => {
     };
 
     const [currentUser, setCurrentUser] = useAtom(state.currentUserAtom);
+    const [favorites, setFavorites] = useAtom(state.favoritesAtom);
     console.log(currentUser);
     const [user, setUser] = useState({
         username: null,
@@ -42,6 +43,7 @@ const UserProfile = () => {
             <div className="card-body">
                     <h5 className="card-title">Name: {user.username}</h5>
                     <p className="card-text">Email: {user.email}</p>
+                    //map ptr fiecare movieId
             </div>
         </div>
 

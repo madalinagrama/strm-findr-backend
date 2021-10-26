@@ -10,7 +10,7 @@ const Index = () => {
     return (
         <div className="row">
             {cards.map((card, i) => (
-                <Card key={i} {...card} />
+                <Card key={i} {...card} handleFavorites={true} />
             ))}
         </div>
     );

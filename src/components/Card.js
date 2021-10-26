@@ -15,6 +15,7 @@ const Card = ({
     service = "",
     countries = "",
     imdb = "",
+    handleFavorites = false,
 }) => {
     const [currentUser] = useAtom(state.currentUserAtom);
     // const [favorites, setFavorites] = useState({});
@@ -30,17 +31,19 @@ const Card = ({
 
     const favoriteHandler = async () => {
         console.log(currentUser);
-        const resp = await axios.get(
-            process.env.REACT_APP_BASE_URL +
+        if (handleFavorites) {
+            const resp = await axios.get(
+                process.env.REACT_APP_BASE_URL +
                 "/user/" +
                 currentUser.id +
                 "/favorites",
-            {
-                headers: authHeader(),
-            }
-        );
+                {
+                    headers: authHeader(),
+                }
+            );
 
-        console.log(resp);
+            console.log(resp);
+        }
 
         // const req = await axios.post(
         //     process.env.REACT_APP_BASE_URL +
