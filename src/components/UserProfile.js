@@ -43,7 +43,7 @@ const UserProfile = () => {
             <div className="card-body">
                     <h5 className="card-title">Name: {user.username}</h5>
                     <p className="card-text">Email: {user.email}</p>
-                    //map ptr fiecare movieId
+                     {/*map ptr fiecare movieId*/}
             </div>
         </div>
 
