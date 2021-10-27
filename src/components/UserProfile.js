@@ -16,8 +16,8 @@ const UserProfile = () => {
     console.log(currentUser);
     const [user, setUser] = useState({
         username: null,
-        role: null,
         email: null,
+        joinedDate: null,
     });
     console.log(user);
 
@@ -30,7 +30,7 @@ const UserProfile = () => {
         };
 
         setTheUser();
-    }, []);
+    }, []); // de adaugat favorites in acest deps
 
     return (
         <div className="card my-3">
@@ -42,11 +42,13 @@ const UserProfile = () => {
             </div>
             <div className="card-body">
                     <h5 className="card-title">Name: {user.username}</h5>
+                    <p> </p>
                     <p className="card-text">Email: {user.email}</p>
-                     {/*map ptr fiecare movieId*/}
+                    <p className="card-text">Joined date: {user.joinedDate}</p>
+                     {/*/!*map ptr fiecare movieId*!/ de verificat sa nu fie null obiectul pe care se face maparea */}
+                {/*{favorites?.map()}*/}
             </div>
         </div>
-
     );
 };
 
