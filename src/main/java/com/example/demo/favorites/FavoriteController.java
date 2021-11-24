@@ -25,12 +25,15 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
 
     @GetMapping
-    public List<Favorite> getAllFavoritesByUserId(@PathVariable Long userId){
+    public int[] getAllFavoritesByUserId(@PathVariable Long userId, FavoriteDto favoriteDto){
         AppUser appUser = appUserRepository.findById(userId).get();
         List<Favorite> favorites = favoriteRepository.getAllByUser(appUser);
-        System.out.println(favorites);
-        log.info(String.valueOf(favorites));
-        return favorites;
+        int[] results = new int[favorites.size()];
+        for (int i = 0; i < favorites.size(); i++) {
+            results[i] = Integer.parseInt(String.valueOf(favorites.get(i).getMovie().getId()));
+        }
+        log.info(String.valueOf(results));
+        return results;
     }
 
     @PostMapping(path = "/")
