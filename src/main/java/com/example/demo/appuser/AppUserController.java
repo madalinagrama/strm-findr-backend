@@ -1,12 +1,12 @@
 package com.example.demo.appuser;
 
-import com.example.demo.auth.models.ERole;
-import com.example.demo.auth.models.Role;
-import com.example.demo.auth.payload.request.LoginRequest;
-import com.example.demo.auth.payload.request.SignupRequest;
-import com.example.demo.auth.payload.response.JwtResponse;
-import com.example.demo.auth.payload.response.MessageResponse;
-import com.example.demo.auth.repository.RoleRepository;
+import com.example.demo.roles.models.ERole;
+import com.example.demo.roles.models.Role;
+import com.example.demo.payload.request.LoginRequest;
+import com.example.demo.payload.request.SignupRequest;
+import com.example.demo.payload.response.JwtResponse;
+import com.example.demo.payload.response.MessageResponse;
+import com.example.demo.roles.repository.RoleRepository;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.services.UserDetailsImpl;
 import lombok.AllArgsConstructor;
@@ -36,10 +36,15 @@ import java.util.stream.Collectors;
 public class AppUserController {
 
     private final AppUserService userService;
+    @Autowired
     AppUserRepository appUserRepository;
+    @Autowired
     RoleRepository roleRepository;
+    @Autowired
     AuthenticationManager authenticationManager;
+    @Autowired
     JwtUtils jwtUtils;
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
