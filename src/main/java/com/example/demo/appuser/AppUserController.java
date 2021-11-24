@@ -35,17 +35,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AppUserController {
 
-    @Autowired
     private final AppUserService userService;
-    @Autowired
     AppUserRepository appUserRepository;
-    @Autowired
     RoleRepository roleRepository;
-    @Autowired
     AuthenticationManager authenticationManager;
-    @Autowired
     JwtUtils jwtUtils;
-    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired

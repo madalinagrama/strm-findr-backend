@@ -125,10 +125,9 @@ public class GenreConfig {
                     37L,
                     "Western"
             );
-
-            genreRepository.saveAll(List.of(genre1,genre2,genre3,genre4,genre5,genre6,genre7,genre8,genre9,genre10,genre11,genre12,genre13,genre14,genre15,genre16,genre17,genre18,genre19,genre20,genre21,genre22,genre23,genre24,genre25,genre26,genre27,genre28));
+            if (genreRepository.findAll().size() == 0) {
+                genreRepository.saveAll(List.of(genre1, genre2, genre3, genre4, genre5, genre6, genre7, genre8, genre9, genre10, genre11, genre12, genre13, genre14, genre15, genre16, genre17, genre18, genre19, genre20, genre21, genre22, genre23, genre24, genre25, genre26, genre27, genre28));
+            }
         };
-
-
     }
 }
