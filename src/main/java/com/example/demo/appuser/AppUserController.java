@@ -63,15 +63,9 @@ public class AppUserController {
         return new ResponseEntity<>(userService.findByUserName(username), HttpStatus.OK);
     }
 
-//    @PostMapping(path = "/users")
-//    public void registerNewUser(@Validated @RequestBody AppUser user) {
-//        userService.registerNewUser(user);
-//    }
-
     @DeleteMapping(path = "/{id}/delete")
     @Transactional
     public ResponseEntity<?> deleteUser (@PathVariable("id") Long id) {
-
         userService.deleteUser(id);
         return ResponseEntity.ok(new MessageResponse("Deleted successfully!"));
     }
